@@ -28,7 +28,7 @@
           w-100
         "
       >
-        <form id="IdSearch">
+        <form id="IdSearch" onsubmit="">
           <div class="input-group mb-2">
             <input
               type="search"
@@ -51,7 +51,7 @@
         >
           <i class="fas fa-chevron-right"></i> Advanced Search
         </button>
-        <form id="advSearch" class="w-100">
+        <form id="advSearch" class="w-100" onsubmit="">
           <select
             name="searchType"
             id="searchType"
@@ -105,9 +105,15 @@
         </form>
         <hr class="w-100" />
         <h3>View All</h3>
-        <button class="btn btn-link w-100 ps-0 text-start">Departments</button>
-        <button class="btn btn-link w-100 ps-0 text-start">Employees</button>
-        <button class="btn btn-link w-100 ps-0 text-start">Locations</button>
+        <button class="btn btn-link w-100 ps-0 text-start" onclick="">
+          Departments
+        </button>
+        <button class="btn btn-link w-100 ps-0 text-start" onclick="">
+          Employees
+        </button>
+        <button class="btn btn-link w-100 ps-0 text-start" onclick="">
+          Locations
+        </button>
         <hr class="w-100" />
         <button
           id="createButton"
@@ -119,17 +125,26 @@
         </button>
         <ul class="dropdown-menu w-100" aria-labelledby="createButton">
           <li>
-            <a href="#newDeptModal" class="dropdown-item" data-toggle="modal"
+            <a
+              href="#newDeptModal"
+              class="dropdown-ite list-group-item list-group-item-action"
+              data-bs-toggle="modal"
               >Department</a
             >
           </li>
           <li>
-            <a href="#newEmpModal" class="dropdown-item" data-toggle="modal"
+            <a
+              href="#newEmpModal"
+              class="dropdown-item list-group-item list-group-item-action"
+              data-bs-toggle="modal"
               >Employee</a
             >
           </li>
           <li>
-            <a href="#newLocModal" class="dropdown-item" data-toggle="modal"
+            <a
+              href="#newLocModal"
+              class="dropdown-item list-group-item list-group-item-action"
+              data-bs-toggle="modal"
               >Location</a
             >
           </li>
@@ -144,6 +159,175 @@
       >
         <i class="fa fa-bars"></i>
       </button>
+    </div>
+    <div id="newDeptModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1>New Department</h1>
+          </div>
+          <form id="newDeptForm">
+            <div class="modal-body">
+              <input
+                type="text"
+                name="newDept"
+                id="newDept"
+                class="form-control mb-3"
+                placeholder="New Department Name"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <select
+                name="newDeptLoc"
+                id="newDeptLoc"
+                class="form-select"
+                required
+              >
+                <option value="" selected disabled hidden>
+                  Select Location
+                </option>
+                <option value="">A</option>
+                <option value="">B</option>
+                <option value="">C</option>
+              </select>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="newEmpModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1>New Employee</h1>
+          </div>
+          <form id="newEmpForm">
+            <div class="modal-body">
+              <input
+                type="text"
+                name="newEmpFName"
+                id="newEmpFname"
+                class="form-control mb-3"
+                placeholder="First Name"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <input
+                type="text"
+                name="newEmpLName"
+                id="newEmpLName"
+                class="form-control mb-3"
+                placeholder="Last Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="newEmpJob"
+                id="newEmpJob"
+                class="form-control mb-3"
+                placeholder="Position"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <input
+                type="email"
+                name="newEmpEmail"
+                id="newEmpEmail"
+                class="form-control mb-3"
+                placeholder="Email Address"
+                maxlength="50"
+                required
+              />
+              <select
+                name="newEmpDept"
+                id="newEmpDept"
+                class="form-select"
+                required
+              >
+                <option value="" selected disabled hidden>
+                  Select Department
+                </option>
+              </select>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="newLocModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1>New Location</h1>
+          </div>
+          <form id="newLocForm">
+            <div class="modal-body">
+              <input
+                type="text"
+                name="newLoc"
+                id="newLoc"
+                class="form-control mb-3"
+                placeholder="New Location Name"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     <div id="overlay" class="active" onclick="closeMenuBar()"></div>
     <div id="preloader"></div>

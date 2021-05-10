@@ -96,6 +96,7 @@
 }
 
 #advSearch,
-#expandedAdvSearch {
+#expandedAdvSearch,
+#newEmpDept {
   display: none;
 }
