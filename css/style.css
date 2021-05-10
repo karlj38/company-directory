@@ -53,6 +53,13 @@
   transition: left 0.3s;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   background-color: #fff;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+#menuBar::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
 }
 #menuBar.active {
   left: 0;
@@ -73,4 +80,22 @@
   top: 10px;
   left: 15px;
   z-index: 98;
+}
+
+.btn-plain {
+  border: none;
+  box-shadow: none;
+}
+
+#toggleAdvSearch i {
+  transition: transform 0.3s;
+}
+
+.rotate90 {
+  transform: rotate(90deg);
+}
+
+#advSearch,
+#expandedAdvSearch {
+  display: none;
 }

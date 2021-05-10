@@ -9,7 +9,7 @@
     <title>Company Directory</title>
   </head>
   <body>
-    <div id="menuBar" class="container position-fixed active">
+    <div id="menuBar" class="container position-fixed overflow-auto active">
       <button
         id="closeMenu"
         class="btn btn-sm btn-outline-secondary float-end mt-2"
@@ -17,16 +17,123 @@
       >
         <i class="fa fa-times"></i>
       </button>
+      <h2>Company Directory</h2>
+      <hr class="w-100" />
       <nav
         class="
           navbar
           flex-column flex-nowrap
           justify-content-start
           align-items-start
-          overflow-auto
+          w-100
         "
       >
-        <h1>Company Directory</h1>
+        <form id="IdSearch">
+          <div class="input-group mb-2">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              class="form-control"
+              placeholder="Employee ID..."
+              required
+            />
+            <button
+              type="submit"
+              class="btn btn-primary fas fa-search"
+            ></button>
+          </div>
+        </form>
+        <button
+          id="toggleAdvSearch"
+          class="w-100 btn-plain ps-1 text-start"
+          onclick="toggleAdvSearch()"
+        >
+          <i class="fas fa-chevron-right"></i> Advanced Search
+        </button>
+        <form id="advSearch" class="w-100">
+          <select
+            name="searchType"
+            id="searchType"
+            class="form-select mb-2"
+            onchange="configAdvSearch()"
+            required
+          >
+            <option value="" disabled selected hidden>Search Type</option>
+            <option value="departments">Departments</option>
+            <option value="employees">Employees</option>
+            <option value="locations">Locations</option>
+          </select>
+          <div id="expandedAdvSearch">
+            <input
+              type="search"
+              name="query"
+              id="query"
+              class="form-control mb-2"
+              placeholder="Search Query..."
+              required
+            />
+            <select name="where" id="where" class="form-select mb-2">
+              <option value="" disabled selected hidden>Where</option>
+              <option value="col1">Col 1</option>
+              <option value="col2">Col 2</option>
+              <option value="col3">Col 3</option>
+            </select>
+            <select name="operator" id="operator" class="form-select mb-2">
+              <option value="equals">Equal To</option>
+              <option value="notEqual">Not Equal To</option>
+            </select>
+            <input
+              type="text"
+              name="condition"
+              id="condition"
+              class="form-control mb-2"
+              placeholder="Condition..."
+            />
+            <select name="sortBy" id="sortBy" class="form-select mb-2" required>
+              <option value="" disabled selected hidden>Sort By</option>
+              <option value="col1">Col1</option>
+              <option value="col2">Col2</option>
+              <option value="col3">Col3</option>
+            </select>
+            <select name="orderBy" id="orderBy" class="form-select mb-2">
+              <option value="ascending">Ascending</option>
+              <option value="descending">Descending</option>
+            </select>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+          </div>
+        </form>
+        <hr class="w-100" />
+        <h3>View All</h3>
+        <button class="btn btn-link w-100 ps-0 text-start">Departments</button>
+        <button class="btn btn-link w-100 ps-0 text-start">Employees</button>
+        <button class="btn btn-link w-100 ps-0 text-start">Locations</button>
+        <hr class="w-100" />
+        <button
+          id="createButton"
+          class="btn btn-success dropdown-toggle w-100"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Create
+        </button>
+        <ul class="dropdown-menu w-100" aria-labelledby="createButton">
+          <li>
+            <a href="#newDeptModal" class="dropdown-item" data-toggle="modal"
+              >Department</a
+            >
+          </li>
+          <li>
+            <a href="#newEmpModal" class="dropdown-item" data-toggle="modal"
+              >Employee</a
+            >
+          </li>
+          <li>
+            <a href="#newLocModal" class="dropdown-item" data-toggle="modal"
+              >Location</a
+            >
+          </li>
+        </ul>
       </nav>
     </div>
     <div id="content" class="container-fluid">
