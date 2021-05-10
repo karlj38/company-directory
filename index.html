@@ -9,7 +9,36 @@
     <title>Company Directory</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div id="menuBar" class="container position-fixed active">
+      <button
+        id="closeMenu"
+        class="btn btn-sm btn-outline-secondary float-end mt-2"
+        onclick="closeMenuBar()"
+      >
+        <i class="fa fa-times"></i>
+      </button>
+      <nav
+        class="
+          navbar
+          flex-column flex-nowrap
+          justify-content-start
+          align-items-start
+          overflow-auto
+        "
+      >
+        <h1>Company Directory</h1>
+      </nav>
+    </div>
+    <div id="content" class="container-fluid">
+      <button
+        id="menuButton"
+        class="btn btn-sm btn-outline-secondary position-fixed"
+        onclick="openMenuBar()"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <div id="overlay" class="active" onclick="closeMenuBar()"></div>
     <div id="preloader"></div>
     <script src="vendors/jQuery-3.6.0/jquery-3.6.0.min.js"></script>
     <script src="vendors/bootstrap-5.0/js/bootstrap.bundle.min.js"></script>
