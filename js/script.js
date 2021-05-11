@@ -15,10 +15,10 @@ function configViewEmpForm(event, id = null) {
   event.preventDefault();
   $.getJSON("php/getList", { type: "departments" }, function (data) {
     if (data.status.code == 200) {
-      const departments = data.data || null;
-      if (departments && departments.length) {
+      const depts = data.data || null;
+      if (depts && depts.length) {
         $("#empDept").empty();
-        departments.forEach((d) => {
+        depts.forEach((d) => {
           $("#empDept").append(`<option value="${d.name}">${d.name}</option>`);
         });
         getEmployee(id || $("#search").val());
@@ -45,9 +45,44 @@ function getEmployee(id) {
   });
 }
 
+function getDepartments() {
+  $.getJSON("php/getList", { type: "departments" }, function (data) {
+    const depts = data.data || null;
+    if (data.status.code == 200 && depts && depts.length) {
+      $("#grid").empty();
+      depts.forEach(function (d) {
+        let $col = $(
+          `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
+        );
+        let $card = $(`<div id="e${d.id}" class="card mx-auto"></div>`);
+
+        let $cardHeader = $(`<div class="card-header"></div>`);
+        $cardHeader.append(`<h2 class="card-title fs-4">${d.name}</h2>`);
+        $card.append($cardHeader);
+
+        let $cardBody = $(`<div class="card-body"></div>`);
+        $cardBody.append(`<p class="card-subtitle">${d.location}</p>`);
+        $card.append($cardBody);
+
+        let $cardFooter = $(`<div class="card-footer text-end"></div>`);
+        $cardFooter.append(
+          `<button class="btn btn-primary btn-sm me-2"><i class="fas fa-eye"></i></button>`
+        );
+        $cardFooter.append(
+          `<button class="btn btn-secondary btn-sm" onclick="configViewDeptForm(${d.id})"><i class="fa fa-edit"></i></button>`
+        );
+        $card.append($cardFooter);
+
+        $col.append($card);
+        $("#grid").append($col);
+        closeMenuBar();
+      });
+    }
+  });
+}
+
 function getEmployees() {
   $.getJSON("php/getList", { type: "employees" }, function (data) {
-    console.log(data);
     const staff = data.data || null;
     if (data.status.code == 200 && staff && staff.length) {
       $("#grid").empty();
