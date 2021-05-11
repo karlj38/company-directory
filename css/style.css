@@ -99,8 +99,7 @@
 }
 
 #advSearch,
-#expandedAdvSearch,
-#newEmpDept {
+#expandedAdvSearch {
   display: none;
 }
 

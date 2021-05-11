@@ -62,6 +62,26 @@ function configNewDeptModal() {
   });
 }
 
+function configNewEmpModal() {
+  $.getJSON("php/getList", { type: "departments" }, function (data) {
+    if (data.status.code == 200) {
+      const depts = data.data || null;
+      if (depts && depts.length) {
+        $("#newEmpLoc").empty()
+          .append(`<option value="" selected disabled hidden>
+        Select Department
+      </option>`);
+        depts.forEach((d) => {
+          $("#newEmpDept").append(
+            `<option value="${d.name}">${d.name}</option>`
+          );
+        });
+        $("#newEmpModal").modal("show");
+      }
+    }
+  });
+}
+
 function getDepartment(id) {
   $.getJSON("php/get", { type: "department", id: id }, function (data, status) {
     if (data.status.code == 200) {
