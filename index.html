@@ -28,7 +28,7 @@
           w-100
         "
       >
-        <form id="IdSearch" onsubmit="getEmployee(event)">
+        <form id="IdSearch" onsubmit="configViewEmpForm(event)">
           <div class="input-group mb-2">
             <input
               type="search"
@@ -397,11 +397,12 @@
                 placeholder="Email"
                 required
               />
-              <select name="empDept" id="empDept" class="form-select" required>
-                <option value="" selected disabled hidden>
-                  Select Department
-                </option>
-              </select>
+              <select
+                name="empDept"
+                id="empDept"
+                class="form-select"
+                required
+              ></select>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-secondary">

@@ -11,10 +11,38 @@ function configAdvSearch() {
   $("#expandedAdvSearch").slideDown();
 }
 
-function getEmployee(event) {
+function configViewEmpForm(event) {
   event.preventDefault();
-  //ajax
-  $("#viewEmpModal").modal("show");
+  $.getJSON("php/getList", { type: "departments" }, function (data) {
+    if (data.status.code == 200) {
+      const departments = data.data || null;
+      if (departments && departments.length) {
+        $("#empDept").empty();
+        departments.forEach((d) => {
+          $("#empDept").append(`<option value="${d.name}">${d.name}</option>`);
+        });
+        getEmployee($("#search").val());
+      }
+    }
+  });
+}
+
+function getEmployee(id) {
+  $.getJSON("php/getEmployee", { id: id }, function (data, status) {
+    if (data.status.code == 200) {
+      if ((data.data || null) && data.data.length) {
+        const emp = data.data[0];
+        $("#empFName").val(emp.firstName);
+        $("#empLName").val(emp.lastName);
+        $("#empJob").val(emp.jobTitle);
+        $("#empEmail").val(emp.email);
+        $("#empDept").val(emp.department);
+        $("#viewEmpModal").modal("show");
+      } else {
+        alert("No result found");
+      }
+    }
+  });
 }
 
 function openMenuBar() {
