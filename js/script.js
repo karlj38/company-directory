@@ -11,6 +11,12 @@ function configAdvSearch() {
   $("#expandedAdvSearch").slideDown();
 }
 
+function getEmployee(event) {
+  event.preventDefault();
+  //ajax
+  $("#viewEmpModal").modal("show");
+}
+
 function openMenuBar() {
   $("#menuBar, #overlay").addClass("active");
 }

@@ -28,7 +28,7 @@
           w-100
         "
       >
-        <form id="IdSearch" onsubmit="">
+        <form id="IdSearch" onsubmit="getEmployee(event)">
           <div class="input-group mb-2">
             <input
               type="search"
@@ -36,6 +36,8 @@
               id="search"
               class="form-control"
               placeholder="Employee ID..."
+              maxlength="6"
+              pattern="[0-9]+"
               required
             />
             <button
@@ -160,6 +162,7 @@
         <i class="fa fa-bars"></i>
       </button>
     </div>
+
     <div id="newDeptModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -204,9 +207,11 @@
                 <option value="">B</option>
                 <option value="">C</option>
               </select>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Submit</button>
-              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-folder-plus"></i>
+              </button>
             </div>
           </form>
         </div>
@@ -240,7 +245,7 @@
                 class="form-control mb-3"
                 placeholder="First Name"
                 maxlength="50"
-                pattern="[a-zA-Z\. ]+"
+                pattern="[a-zA-Z\.' ]+"
                 required
               />
               <input
@@ -283,7 +288,9 @@
                 </option>
               </select>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-user-plus"></i>
+                </button>
               </div>
             </div>
           </form>
@@ -322,8 +329,87 @@
                 required
               />
               <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-folder-plus"></i>
+                </button>
               </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="viewEmpModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1>View Employee</h1>
+          </div>
+          <form>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="empFName"
+                id="empFName"
+                class="form-control mb-2"
+                placeholder="First Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="empLName"
+                id="empLName"
+                class="form-control mb-2"
+                placeholder="Last Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="empJob"
+                id="empJob"
+                class="form-control mb-2"
+                placeholder="Position"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <input
+                type="email"
+                name="empEmail"
+                id="empEmail"
+                class="form-control mb-2"
+                placeholder="Email"
+                required
+              />
+              <select name="empDept" id="empDept" class="form-select" required>
+                <option value="" selected disabled hidden>
+                  Select Department
+                </option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-user-edit"></i>
+              </button>
+              <button type="submit" class="btn btn-danger" disabled>
+                <i class="fas fa-user-minus"></i>
+              </button>
             </div>
           </form>
         </div>
