@@ -7,14 +7,30 @@ function db($query)
 
     $result = $conn->query($query);
     if (!$result) {
-        http_response_code(400);
-        $output['status']['code'] = 400;
-        $output['status']['name'] = "executed";
-        $output['status']['description'] = "query failed";
-        $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-        $conn->close();
-        echo json_encode($output);
-        exit;
+        json(400, "executed", "query failed");
     }
     return $result;
+}
+
+function escape($str)
+{
+    global $conn;
+    return $conn->real_escape_string(trim($str));
+}
+
+function json($code, $name, $desc, $data = null)
+{
+    global $conn;
+    global $executionStartTime;
+
+    http_response_code($code);
+    $output['status']['code'] = $code;
+    $output['status']['name'] = $name;
+    $output['status']['description'] = $desc;
+    $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+    $output['data'] = $data;
+
+    $conn->close();
+    echo json_encode($output);
+    exit;
 }
