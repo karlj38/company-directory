@@ -22,7 +22,8 @@ if ($type = $_GET["type"] ?? null) {
                     ORDER BY p.lastName, p.firstName, d.name, l.name";
                     break;
                 case 'location':
-                    $query = "SELECT l.id, name FROM location as l
+                    $query = "SELECT l.id, l.name
+                    FROM location l
                     WHERE l.id = '$id'
                     ORDER BY name";
                     break;

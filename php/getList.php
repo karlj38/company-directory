@@ -5,9 +5,11 @@ if ($type = $_GET["type"] ?? null) {
     $query = "";
     switch ($type) {
         case 'departments':
-            $query = "SELECT d.id, d.name, l.name as location
+            $query = "SELECT d.id, d.name, l.name as location, COUNT(*) as personnel
             FROM department d
             LEFT JOIN location l ON (l.id = d.locationID)
+            LEFT JOIN personnel p ON (p.departmentID = d.ID)
+            GROUP BY d.name
             ORDER BY d.name";
             break;
         case 'employees':
@@ -18,7 +20,11 @@ if ($type = $_GET["type"] ?? null) {
             ORDER BY p.lastName, p.firstName, d.name, l.name";
             break;
         case 'locations':
-            $query = "SELECT id, name FROM location
+            $query = "SELECT l.id, l.name, d.name as dept, COUNT(*) as personnel
+            FROM location l
+            LEFT JOIN department d ON (d.locationID = l.id)
+            LEFT JOIN personnel p ON (p.departmentID = d.id)
+			GROUP BY l.name
             ORDER BY name";
             break;
         default:
