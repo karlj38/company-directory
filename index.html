@@ -119,7 +119,10 @@
         >
           Employees
         </button>
-        <button class="btn btn-link w-100 ps-0 text-start" onclick="">
+        <button
+          class="btn btn-link w-100 ps-0 text-start"
+          onclick="getLocations()"
+        >
           Locations
         </button>
         <hr class="w-100" />
@@ -345,7 +348,7 @@
         </div>
       </div>
     </div>
-    <div id="viewDeptModal" class="modal" tabindex="-1">
+    <div id="DeptModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <button
@@ -395,7 +398,7 @@
         </div>
       </div>
     </div>
-    <div id="viewEmpModal" class="modal" tabindex="-1">
+    <div id="EmpModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <button
@@ -467,6 +470,50 @@
               </button>
               <button type="submit" class="btn btn-danger" disabled>
                 <i class="fas fa-user-minus"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="LocModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1 class="modal-title">Manage Location</h1>
+          </div>
+          <form>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="locName"
+                id="locName"
+                class="form-control mb-3"
+                placeholder="Department Name"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="submit" class="btn btn-danger" disabled>
+                <i class="fas fa-folder-minus"></i>
               </button>
             </div>
           </form>
