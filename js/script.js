@@ -11,7 +11,22 @@ function configAdvSearch() {
   $("#expandedAdvSearch").slideDown();
 }
 
-function configViewEmpForm(event, id = null) {
+function configDeptModal(id) {
+  $.getJSON("php/getList", { type: "locations" }, function (data) {
+    if (data.status.code == 200) {
+      const depts = data.data || null;
+      if (depts && depts.length) {
+        $("#deptLoc").empty();
+        depts.forEach((d) => {
+          $("#deptLoc").append(`<option value="${d.name}">${d.name}</option>`);
+        });
+        getDepartment(id);
+      }
+    }
+  });
+}
+
+function configEmpModal(event, id = null) {
   event.preventDefault();
   $.getJSON("php/getList", { type: "departments" }, function (data) {
     if (data.status.code == 200) {
@@ -27,8 +42,23 @@ function configViewEmpForm(event, id = null) {
   });
 }
 
+function getDepartment(id) {
+  $.getJSON("php/get", { type: "department", id: id }, function (data, status) {
+    if (data.status.code == 200) {
+      if ((data.data || null) && data.data.length) {
+        const d = data.data[0];
+        $("#deptName").val(d.name);
+        $("#deptLoc").val(d.location);
+        $("#viewDeptModal").modal("show");
+      } else {
+        alert("No result found");
+      }
+    }
+  });
+}
+
 function getEmployee(id) {
-  $.getJSON("php/getEmployee", { id: id }, function (data, status) {
+  $.getJSON("php/get", { type: "employee", id: id }, function (data, status) {
     if (data.status.code == 200) {
       if ((data.data || null) && data.data.length) {
         const emp = data.data[0];
@@ -69,7 +99,7 @@ function getDepartments() {
           `<button class="btn btn-primary btn-sm me-2"><i class="fas fa-eye"></i></button>`
         );
         $cardFooter.append(
-          `<button class="btn btn-secondary btn-sm" onclick="configViewDeptForm(${d.id})"><i class="fa fa-edit"></i></button>`
+          `<button class="btn btn-secondary btn-sm" onclick="configDeptModal(${d.id})"><i class="fa fa-edit"></i></button>`
         );
         $card.append($cardFooter);
 
@@ -112,7 +142,7 @@ function getEmployees() {
           `<a href="mailto:${e.email}" target="_blank" class="me-2"><button class="btn btn-primary btn-sm"><i class="fas fa-envelope"></i></button></a>`
         );
         $cardFooter.append(
-          `<button class="btn btn-secondary btn-sm" onclick="configViewEmpForm(event, ${e.id})"><i class="fa fa-user-edit"></i></button>`
+          `<button class="btn btn-secondary btn-sm" onclick="configEmpModal(event, ${e.id})"><i class="fa fa-user-edit"></i></button>`
         );
         $card.append($cardFooter);
 

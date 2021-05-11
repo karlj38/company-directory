@@ -28,7 +28,7 @@
           w-100
         "
       >
-        <form id="IdSearch" onsubmit="configViewEmpForm(event)">
+        <form id="IdSearch" onsubmit="configEmpModal(event)">
           <div class="input-group mb-2">
             <input
               type="search"
@@ -340,6 +340,56 @@
                   <i class="fas fa-folder-plus"></i>
                 </button>
               </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="viewDeptModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1 class="modal-title">Manage Department</h1>
+          </div>
+          <form>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="deptName"
+                id="deptName"
+                class="form-control mb-3"
+                placeholder="Department Name"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <select
+                name="deptLoc"
+                id="deptLoc"
+                class="form-select"
+                required
+              ></select>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="submit" class="btn btn-danger" disabled>
+                <i class="fas fa-folder-minus"></i>
+              </button>
             </div>
           </form>
         </div>
