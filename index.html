@@ -110,7 +110,10 @@
         <button class="btn btn-link w-100 ps-0 text-start" onclick="">
           Departments
         </button>
-        <button class="btn btn-link w-100 ps-0 text-start" onclick="">
+        <button
+          class="btn btn-link w-100 ps-0 text-start"
+          onclick="getEmployees()"
+        >
           Employees
         </button>
         <button class="btn btn-link w-100 ps-0 text-start" onclick="">
@@ -153,7 +156,7 @@
         </ul>
       </nav>
     </div>
-    <div id="content" class="container-fluid">
+    <div id="content" class="container-fluid mx-auto">
       <button
         id="menuButton"
         class="btn btn-sm btn-outline-secondary position-fixed"
@@ -161,6 +164,7 @@
       >
         <i class="fa fa-bars"></i>
       </button>
+      <div id="grid" class="row"></div>
     </div>
 
     <div id="newDeptModal" class="modal" tabindex="-1">
@@ -180,7 +184,7 @@
             <i class="fa fa-times"></i>
           </button>
           <div class="modal-header">
-            <h1>New Department</h1>
+            <h1 class="modal-title">New Department</h1>
           </div>
           <form id="newDeptForm">
             <div class="modal-body">
@@ -234,7 +238,7 @@
             <i class="fa fa-times"></i>
           </button>
           <div class="modal-header">
-            <h1>New Employee</h1>
+            <h1 class="modal-title">New Employee</h1>
           </div>
           <form id="newEmpForm">
             <div class="modal-body">
@@ -314,7 +318,7 @@
             <i class="fa fa-times"></i>
           </button>
           <div class="modal-header">
-            <h1>New Location</h1>
+            <h1 class="modal-title">New Location</h1>
           </div>
           <form id="newLocForm">
             <div class="modal-body">
@@ -355,7 +359,7 @@
             <i class="fa fa-times"></i>
           </button>
           <div class="modal-header">
-            <h1>View Employee</h1>
+            <h1 class="modal-title">Manage Employee</h1>
           </div>
           <form>
             <div class="modal-body">
