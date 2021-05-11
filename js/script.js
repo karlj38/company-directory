@@ -42,6 +42,26 @@ function configEmpModal(event, id = null) {
   });
 }
 
+function configNewDeptModal() {
+  $.getJSON("php/getList", { type: "locations" }, function (data) {
+    if (data.status.code == 200) {
+      const locs = data.data || null;
+      if (locs && locs.length) {
+        $("#newDeptLoc").empty()
+          .append(`<option value="" selected disabled hidden>
+        Select Location
+      </option>`);
+        locs.forEach((l) => {
+          $("#newDeptLoc").append(
+            `<option value="${l.name}">${l.name}</option>`
+          );
+        });
+        $("#newDeptModal").modal("show");
+      }
+    }
+  });
+}
+
 function getDepartment(id) {
   $.getJSON("php/get", { type: "department", id: id }, function (data, status) {
     if (data.status.code == 200) {

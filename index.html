@@ -137,9 +137,8 @@
         <ul class="dropdown-menu w-100" aria-labelledby="createButton">
           <li>
             <a
-              href="#newDeptModal"
               class="dropdown-ite list-group-item list-group-item-action"
-              data-bs-toggle="modal"
+              onclick="configNewDeptModal()"
               >Department</a
             >
           </li>
@@ -209,14 +208,7 @@
                 id="newDeptLoc"
                 class="form-select"
                 required
-              >
-                <option value="" selected disabled hidden>
-                  Select Location
-                </option>
-                <option value="">A</option>
-                <option value="">B</option>
-                <option value="">C</option>
-              </select>
+              ></select>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-success">
