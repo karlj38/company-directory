@@ -5,20 +5,20 @@ if ($type = $_GET["type"] ?? null) {
     $query = "";
     switch ($type) {
         case 'departments':
-            $query = "SELECT d.name, l.name as location
+            $query = "SELECT d.id, d.name, l.name as location
             FROM department d
             LEFT JOIN location l ON (l.id = d.locationID)
             ORDER BY d.name";
             break;
         case 'employees':
-            $query = $query = "SELECT p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location
+            $query = $query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location
             FROM personnel p
             LEFT JOIN department d ON (d.id = p.departmentID)
             LEFT JOIN location l ON (l.id = d.locationID)
             ORDER BY p.lastName, p.firstName, d.name, l.name";
             break;
         case 'locations':
-            $query = "SELECT name FROM location
+            $query = "SELECT id, name FROM location
             ORDER BY name";
             break;
         default:
