@@ -11,8 +11,9 @@ $(function () {
 
 function advSearch(event, table = null, col = null, term = null) {
   event.preventDefault();
-  let op, condition, order, sort;
+  let op, condition, order, sort, within;
   if (table && col && term) {
+    within = true;
     op = "equal";
     condition = term;
   } else {
@@ -48,6 +49,14 @@ function advSearch(event, table = null, col = null, term = null) {
             case "personnel":
               displayPersonnel(arr);
               break;
+          }
+          if (within) {
+            $("#currentView").text(
+              $("#currentView").text() + ` Within ${term}`
+            );
+          } else {
+            table = table[0].toUpperCase() + table.substr(1);
+            $("#currentView").text(`Custom ${table} Results`);
           }
         }
       }
@@ -210,8 +219,9 @@ function displayDepartments(depts) {
 
     $col.append($card);
     $("#grid").append($col);
-    closeMenuBar();
   });
+  $("#currentView").text("All Departments");
+  closeMenuBar();
 }
 
 function displayLocations(locs) {
@@ -254,8 +264,9 @@ function displayLocations(locs) {
 
     $col.append($card);
     $("#grid").append($col);
-    closeMenuBar();
   });
+  $("#currentView").text("All Locations");
+  closeMenuBar();
 }
 
 function displayPersonnel(staff) {
@@ -305,9 +316,11 @@ function displayPersonnel(staff) {
     $card.append($cardFooter);
 
     $col.append($card);
+
     $("#grid").append($col);
-    closeMenuBar();
   });
+  $("#currentView").text("All Personnel");
+  closeMenuBar();
 }
 
 function getDepartment(id) {
