@@ -1,5 +1,12 @@
 $(function () {
   $("#preloader").fadeOut().remove();
+  $(window).scroll(function () {
+    if ($(this).scrollTop() > screen.availHeight / 2) {
+      $("#toTop").fadeIn();
+    } else {
+      $("#toTop").fadeOut();
+    }
+  });
 });
 
 function advSearch(event) {
@@ -324,4 +331,8 @@ function openMenuBar() {
 function toggleAdvSearch() {
   $("#toggleAdvSearch i").toggleClass("rotate90");
   $("#advSearch").slideToggle("fast");
+}
+
+function toTop() {
+  $("html, body").animate({ scrollTop: 0 }, 500);
 }

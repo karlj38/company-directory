@@ -107,3 +107,7 @@
   max-width: 2000px;
   padding: 5%;
 }
+
+#toTop {
+  display: none;
+}
