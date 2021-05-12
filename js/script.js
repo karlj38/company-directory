@@ -9,30 +9,36 @@ $(function () {
   });
 });
 
-function advSearch(event) {
+function advSearch(event, table = null, col = null, term = null) {
   event.preventDefault();
-  $table = $("#searchType").val();
-  $col = $("#where").val();
-  $op = $("#operator").val();
-  $condition = $("#condition").val();
-  $order = $("#orderBy").val();
-  $sort = $("#sortBy").val();
+  let op, condition, order, sort;
+  if (table && col && term) {
+    op = "equal";
+    condition = term;
+  } else {
+    table = $("#searchType").val();
+    col = $("#where").val();
+    op = $("#operator").val();
+    condition = $("#condition").val();
+    order = $("#orderBy").val();
+    sort = $("#sortBy").val();
+  }
 
   $.getJSON(
     "php/getList",
     {
-      table: $table,
-      column: $col,
-      operator: $op,
-      condition: $condition,
-      order: $order,
-      sort: $sort,
+      table: table,
+      column: col,
+      operator: op,
+      condition: condition,
+      order: order,
+      sort: sort,
     },
     function (data) {
       if (data.status.code == 200) {
         const arr = data.data;
         if (arr && arr.length) {
-          switch ($table) {
+          switch (table) {
             case "department":
               displayDepartments(arr);
               break;
@@ -69,12 +75,24 @@ function configAdvSearch() {
           .append(
             `<option value="" disabled selected hidden>Order By</option>`
           );
+        let prefix = "";
+        switch ($table) {
+          case "department":
+            prefix = "d.";
+            break;
+          case "location":
+            prefix = "l.";
+            break;
+          case "personnel":
+            prefix = "p.";
+            break;
+        }
         cols.forEach((col) => {
           $("#where").append(
-            `<option value="${col.COLUMN_NAME}">${col.COLUMN_NAME}</option>`
+            `<option value="${prefix}${col.COLUMN_NAME}">${col.COLUMN_NAME}</option>`
           );
           $("#orderBy").append(
-            `<option value="${col.COLUMN_NAME}">${col.COLUMN_NAME}</option>`
+            `<option value="${prefix}${col.COLUMN_NAME}">${col.COLUMN_NAME}</option>`
           );
         });
       }
@@ -157,7 +175,7 @@ function displayDepartments(depts) {
     let $col = $(
       `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
     );
-    let $card = $(`<div id="e${d.id}" class="card mx-auto"></div>`);
+    let $card = $(`<div id="d${d.id}" class="card mx-auto"></div>`);
 
     let $cardHeader = $(`<div class="card-header"></div>`);
     $cardHeader.append(`<h2 class="card-title fs-4">${d.name}</h2>`);
@@ -169,9 +187,22 @@ function displayDepartments(depts) {
     $card.append($cardBody);
 
     let $cardFooter = $(`<div class="card-footer text-end"></div>`);
-    $cardFooter.append(
-      `<button class="btn btn-primary btn-sm me-2"><i class="fas fa-eye"></i></button>`
+    let $dropdown = $(`<div class="dropdown d-inline me-2"></div>`);
+    let $dropButton = $(
+      `<button id="l${d.id}View" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-eye"></i></button>`
     );
+    $dropdown.append($dropButton);
+    let $dropmenu = $(
+      `<div class="dropdown-menu" aria-labelled-by="l${d.id}View"></div>`
+    );
+    $dropmenu.append(
+      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${d.location}')">Location</a></li>`
+    );
+    $dropmenu.append(
+      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${d.name}')">Personnel</a></li>`
+    );
+    $dropdown.append($dropmenu);
+    $cardFooter.append($dropdown);
     $cardFooter.append(
       `<button class="btn btn-secondary btn-sm" onclick="configDeptModal(${d.id})"><i class="fa fa-edit"></i></button>`
     );
@@ -189,7 +220,7 @@ function displayLocations(locs) {
     let $col = $(
       `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
     );
-    let $card = $(`<div id="e${l.id}" class="card mx-auto"></div>`);
+    let $card = $(`<div id="l${l.id}" class="card mx-auto"></div>`);
 
     let $cardHeader = $(`<div class="card-header"></div>`);
     $cardHeader.append(`<h2 class="card-title fs-4">${l.name}</h2>`);
@@ -200,9 +231,22 @@ function displayLocations(locs) {
     $card.append($cardBody);
 
     let $cardFooter = $(`<div class="card-footer text-end"></div>`);
-    $cardFooter.append(
-      `<button class="btn btn-primary btn-sm me-2"><i class="fas fa-eye"></i></button>`
+    let $dropdown = $(`<div class="dropdown d-inline me-2"></div>`);
+    let $dropButton = $(
+      `<button id="l${l.id}View" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-eye"></i></button>`
     );
+    $dropdown.append($dropButton);
+    let $dropmenu = $(
+      `<div class="dropdown-menu" aria-labelled-by="l${l.id}View"></div>`
+    );
+    $dropmenu.append(
+      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'l.name', '${l.name}')">Departments</a></li>`
+    );
+    $dropmenu.append(
+      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${l.name}')">Personnel</a></li>`
+    );
+    $dropdown.append($dropmenu);
+    $cardFooter.append($dropdown);
     $cardFooter.append(
       `<button class="btn btn-secondary btn-sm" onclick="getLocation(${l.id})"><i class="fa fa-edit"></i></button>`
     );
@@ -239,6 +283,22 @@ function displayPersonnel(staff) {
     $cardFooter.append(
       `<a href="mailto:${p.email}" target="_blank" class="me-2"><button class="btn btn-primary btn-sm"><i class="fas fa-envelope"></i></button></a>`
     );
+    let $dropdown = $(`<div class="dropdown d-inline me-2"></div>`);
+    let $dropButton = $(
+      `<button id="l${p.id}View" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-eye"></i></button>`
+    );
+    $dropdown.append($dropButton);
+    let $dropmenu = $(
+      `<div class="dropdown-menu" aria-labelled-by="l${p.id}View"></div>`
+    );
+    $dropmenu.append(
+      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'd.name', '${p.department}')">Department</a></li>`
+    );
+    $dropmenu.append(
+      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${p.location}')">Location</a></li>`
+    );
+    $dropdown.append($dropmenu);
+    $cardFooter.append($dropdown);
     $cardFooter.append(
       `<button class="btn btn-secondary btn-sm" onclick="configPModal(event, ${p.id})"><i class="fa fa-user-edit"></i></button>`
     );

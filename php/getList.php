@@ -16,16 +16,13 @@ if ($table = $_GET["table"] ?? null) {
 
     switch ($table) {
         case 'department':
-            $col = $col ? "d.$col" : null;
-            $order = $order ? "d.$order" : "d.name";
+            $order = $order ? "$order" : "d.name";
             break;
         case 'personnel':
-            $col = $col ? "p.$col" : null;
-            $order = $order ? "p.$order" : "p.lastName";
+            $order = $order ? "$order" : "p.lastName";
             break;
         case 'location':
-            $col = $col ? "l.$col" : null;
-            $order = $order ? "l.$order" : "l.name";
+            $order = $order ? "$order" : "l.name";
             break;
         default:
             json(400, "bad request", "invalid type");
@@ -89,5 +86,5 @@ if ($table = $_GET["table"] ?? null) {
     }
     json(200, "ok", "success", $data);
 } else {
-    json(400, "bad request", "no type");
+    json(400, "bad request", "no table");
 }
