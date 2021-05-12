@@ -21,7 +21,7 @@ if ($table = $_GET["table"] ?? null) {
             break;
         case 'personnel':
             $col = $col ? "p.$col" : null;
-            $order = $order ? "p.$order" : "p.lastName, p.firstName, d.name, l.name";
+            $order = $order ? "p.$order" : "p.lastName";
             break;
         case 'location':
             $col = $col ? "l.$col" : null;
@@ -80,7 +80,8 @@ if ($table = $_GET["table"] ?? null) {
             break;
     }
     $query = $sort ? $query . $sort : $query;
-
+    // echo $query;
+    // exit;
     $result = db($query);
     $data = [];
     while ($row = $result->fetch_assoc()) {

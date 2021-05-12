@@ -29,11 +29,11 @@ function advSearch(event) {
             case "department":
               displayDepartments(arr);
               break;
-            case "personnel":
-              displayEmployees(arr);
-              break;
             case "location":
               displayLocations(arr);
+              break;
+            case "personnel":
+              displayPersonnel(arr);
               break;
           }
         }
@@ -91,17 +91,17 @@ function configDeptModal(id) {
   });
 }
 
-function configEmpModal(event, id = null) {
+function configPModal(event, id = null) {
   event.preventDefault();
   $.getJSON("php/getList", { table: "department" }, function (data) {
     if (data.status.code == 200) {
       const depts = data.data || null;
       if (depts && depts.length) {
-        $("#empDept").empty();
+        $("#pDept").empty();
         depts.forEach((d) => {
-          $("#empDept").append(`<option value="${d.name}">${d.name}</option>`);
+          $("#pDept").append(`<option value="${d.name}">${d.name}</option>`);
         });
-        getEmployee(id || $("#search").val());
+        getPerson(id || $("#search").val());
       }
     }
   });
@@ -127,21 +127,18 @@ function configNewDeptModal() {
   });
 }
 
-function configNewEmpModal() {
+function configNewPModal() {
   $.getJSON("php/getList", { table: "department" }, function (data) {
     if (data.status.code == 200) {
       const depts = data.data || null;
       if (depts && depts.length) {
-        $("#newEmpLoc").empty()
-          .append(`<option value="" selected disabled hidden>
+        $("#newPLoc").empty().append(`<option value="" selected disabled hidden>
         Select Department
       </option>`);
         depts.forEach((d) => {
-          $("#newEmpDept").append(
-            `<option value="${d.name}">${d.name}</option>`
-          );
+          $("#newPDept").append(`<option value="${d.name}">${d.name}</option>`);
         });
-        $("#newEmpModal").modal("show");
+        $("#newPModal").modal("show");
       }
     }
   });
@@ -178,41 +175,7 @@ function displayDepartments(depts) {
     closeMenuBar();
   });
 }
-function displayEmployees(staff) {
-  $("#grid").empty();
-  staff.forEach(function (e) {
-    let $col = $(
-      `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
-    );
-    let $card = $(`<div id="e${e.id}" class="card mx-auto"></div>`);
 
-    let $cardHeader = $(`<div class="card-header"></div>`);
-    $cardHeader.append(
-      `<h2 class="card-title fs-4">${e.firstName} ${e.lastName}</h2>`
-    );
-    $card.append($cardHeader);
-
-    let $cardBody = $(`<div class="card-body"></div>`);
-    if (e.jobTitle || null) {
-      $cardBody.append(`<p class="card-subtitle">${e.jobTitle}</p>`);
-    }
-    $cardBody.append(`<p class="card-text">${e.department}, ${e.location}</p>`);
-    $card.append($cardBody);
-
-    let $cardFooter = $(`<div class="card-footer text-end"></div>`);
-    $cardFooter.append(
-      `<a href="mailto:${e.email}" target="_blank" class="me-2"><button class="btn btn-primary btn-sm"><i class="fas fa-envelope"></i></button></a>`
-    );
-    $cardFooter.append(
-      `<button class="btn btn-secondary btn-sm" onclick="configEmpModal(event, ${e.id})"><i class="fa fa-user-edit"></i></button>`
-    );
-    $card.append($cardFooter);
-
-    $col.append($card);
-    $("#grid").append($col);
-    closeMenuBar();
-  });
-}
 function displayLocations(locs) {
   $("#grid").empty();
   locs.forEach(function (l) {
@@ -244,6 +207,42 @@ function displayLocations(locs) {
   });
 }
 
+function displayPersonnel(staff) {
+  $("#grid").empty();
+  staff.forEach(function (p) {
+    let $col = $(
+      `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
+    );
+    let $card = $(`<div id="e${p.id}" class="card mx-auto"></div>`);
+
+    let $cardHeader = $(`<div class="card-header"></div>`);
+    $cardHeader.append(
+      `<h2 class="card-title fs-4">${p.firstName} ${p.lastName}</h2>`
+    );
+    $card.append($cardHeader);
+
+    let $cardBody = $(`<div class="card-body"></div>`);
+    if (p.jobTitle || null) {
+      $cardBody.append(`<p class="card-subtitle">${p.jobTitle}</p>`);
+    }
+    $cardBody.append(`<p class="card-text">${p.department}, ${p.location}</p>`);
+    $card.append($cardBody);
+
+    let $cardFooter = $(`<div class="card-footer text-end"></div>`);
+    $cardFooter.append(
+      `<a href="mailto:${p.email}" target="_blank" class="me-2"><button class="btn btn-primary btn-sm"><i class="fas fa-envelope"></i></button></a>`
+    );
+    $cardFooter.append(
+      `<button class="btn btn-secondary btn-sm" onclick="configPModal(event, ${p.id})"><i class="fa fa-user-edit"></i></button>`
+    );
+    $card.append($cardFooter);
+
+    $col.append($card);
+    $("#grid").append($col);
+    closeMenuBar();
+  });
+}
+
 function getDepartment(id) {
   $.getJSON("php/get", { type: "department", id: id }, function (data, status) {
     if (data.status.code == 200) {
@@ -251,7 +250,7 @@ function getDepartment(id) {
         const d = data.data[0];
         $("#deptName").val(d.name);
         $("#deptLoc").val(d.location);
-        $("#DeptModal").modal("show");
+        $("#deptModal").modal("show");
       } else {
         alert("No result found");
       }
@@ -259,17 +258,17 @@ function getDepartment(id) {
   });
 }
 
-function getEmployee(id) {
-  $.getJSON("php/get", { type: "employee", id: id }, function (data, status) {
+function getPerson(id) {
+  $.getJSON("php/get", { type: "personnel", id: id }, function (data, status) {
     if (data.status.code == 200) {
       if ((data.data || null) && data.data.length) {
-        const emp = data.data[0];
-        $("#empFName").val(emp.firstName);
-        $("#empLName").val(emp.lastName);
-        $("#empJob").val(emp.jobTitle);
-        $("#empEmail").val(emp.email);
-        $("#empDept").val(emp.department);
-        $("#EmpModal").modal("show");
+        const p = data.data[0];
+        $("#pFName").val(p.firstName);
+        $("#pLName").val(p.lastName);
+        $("#pJob").val(p.jobTitle);
+        $("#pEmail").val(p.email);
+        $("#pDept").val(p.department);
+        $("#pModal").modal("show");
       } else {
         alert("No result found");
       }
@@ -283,7 +282,7 @@ function getLocation(id) {
       if ((data.data || null) && data.data.length) {
         const l = data.data[0];
         $("#locName").val(l.name);
-        $("#LocModal").modal("show");
+        $("#locModal").modal("show");
       } else {
         alert("No result found");
       }
@@ -300,11 +299,11 @@ function getDepartments() {
   });
 }
 
-function getEmployees() {
+function getPersonnel() {
   $.getJSON("php/getList", { table: "personnel" }, function (data) {
     const staff = data.data || null;
     if (data.status.code == 200 && staff && staff.length) {
-      displayEmployees(staff);
+      displayPersonnel(staff);
     }
   });
 }

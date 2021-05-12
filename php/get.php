@@ -14,18 +14,18 @@ if ($type = $_GET["type"] ?? null) {
                     WHERE d.id = '$id'
                     ORDER BY d.name";
                     break;
-                case 'employee':
-                    $query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location
-                    FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID)
-                    LEFT JOIN location l ON (l.id = d.locationID)
-                    WHERE p.id = '$id'
-                    ORDER BY p.lastName, p.firstName, d.name, l.name";
-                    break;
                 case 'location':
                     $query = "SELECT l.id, l.name
                     FROM location l
                     WHERE l.id = '$id'
                     ORDER BY name";
+                    break;
+                case 'personnel':
+                    $query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location
+                        FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID)
+                        LEFT JOIN location l ON (l.id = d.locationID)
+                        WHERE p.id = '$id'
+                        ORDER BY p.lastName, p.firstName, d.name, l.name";
                     break;
                 default:
                     json(400, "bad request", "invalid type");

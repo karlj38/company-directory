@@ -28,14 +28,14 @@
           w-100
         "
       >
-        <form id="IdSearch" onsubmit="configEmpModal(event)">
+        <form id="IdSearch" onsubmit="configPModal(event)">
           <div class="input-group mb-2">
             <input
               type="search"
               name="search"
               id="search"
               class="form-control"
-              placeholder="Employee ID..."
+              placeholder="Personnel ID..."
               maxlength="6"
               pattern="[0-9]+"
               required
@@ -102,15 +102,15 @@
         </button>
         <button
           class="btn btn-link w-100 ps-0 text-start"
-          onclick="getEmployees()"
-        >
-          Employees
-        </button>
-        <button
-          class="btn btn-link w-100 ps-0 text-start"
           onclick="getLocations()"
         >
           Locations
+        </button>
+        <button
+          class="btn btn-link w-100 ps-0 text-start"
+          onclick="getPersonnel()"
+        >
+          Personnel
         </button>
         <hr class="w-100" />
         <button
@@ -131,18 +131,18 @@
           </li>
           <li>
             <a
-              class="dropdown-item list-group-item list-group-item-action"
-              onclick="configNewEmpModal()"
-              >Employee</a
-            >
-          </li>
-          <li>
-            <a
               href="#newLocModal"
               class="dropdown-item list-group-item list-group-item-action"
               data-bs-toggle="modal"
               >Location</a
             >
+            <li>
+              <a
+                class="dropdown-item list-group-item list-group-item-action"
+                onclick="configNewPModal()"
+                >Personnel</a
+              >
+            </li>
           </li>
         </ul>
       </nav>
@@ -205,86 +205,6 @@
         </div>
       </div>
     </div>
-    <div id="newEmpModal" class="modal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <button
-            class="
-              btn btn-sm btn-outline-secondary
-              position-absolute
-              end-0
-              mt-2
-              me-2
-            "
-            data-bs-dismiss="modal"
-            aria-label="close"
-          >
-            <i class="fa fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h1 class="modal-title">New Employee</h1>
-          </div>
-          <form id="newEmpForm">
-            <div class="modal-body">
-              <input
-                type="text"
-                name="newEmpFName"
-                id="newEmpFname"
-                class="form-control mb-3"
-                placeholder="First Name"
-                maxlength="50"
-                pattern="[a-zA-Z\.' ]+"
-                required
-              />
-              <input
-                type="text"
-                name="newEmpLName"
-                id="newEmpLName"
-                class="form-control mb-3"
-                placeholder="Last Name"
-                maxlength="50"
-                pattern="[a-zA-Z\.' ]+"
-                required
-              />
-              <input
-                type="text"
-                name="newEmpJob"
-                id="newEmpJob"
-                class="form-control mb-3"
-                placeholder="Position"
-                maxlength="50"
-                pattern="[a-zA-Z\. ]+"
-                required
-              />
-              <input
-                type="email"
-                name="newEmpEmail"
-                id="newEmpEmail"
-                class="form-control mb-3"
-                placeholder="Email Address"
-                maxlength="50"
-                required
-              />
-              <select
-                name="newEmpDept"
-                id="newEmpDept"
-                class="form-select"
-                required
-              >
-                <option value="" selected disabled hidden>
-                  Select Department
-                </option>
-              </select>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success">
-                  <i class="fas fa-user-plus"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
     <div id="newLocModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -326,7 +246,87 @@
         </div>
       </div>
     </div>
-    <div id="DeptModal" class="modal" tabindex="-1">
+    <div id="newPModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1 class="modal-title">New Personnel</h1>
+          </div>
+          <form id="newPForm">
+            <div class="modal-body">
+              <input
+                type="text"
+                name="newPFName"
+                id="newPFname"
+                class="form-control mb-3"
+                placeholder="First Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="newPLName"
+                id="newPLName"
+                class="form-control mb-3"
+                placeholder="Last Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="newPJob"
+                id="newPJob"
+                class="form-control mb-3"
+                placeholder="Position"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <input
+                type="email"
+                name="newPEmail"
+                id="newPEmail"
+                class="form-control mb-3"
+                placeholder="Email Address"
+                maxlength="50"
+                required
+              />
+              <select
+                name="newPDept"
+                id="newPDept"
+                class="form-select"
+                required
+              >
+                <option value="" selected disabled hidden>
+                  Select Department
+                </option>
+              </select>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-user-plus"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="deptModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <button
@@ -376,85 +376,7 @@
         </div>
       </div>
     </div>
-    <div id="EmpModal" class="modal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <button
-            class="
-              btn btn-sm btn-outline-secondary
-              position-absolute
-              end-0
-              mt-2
-              me-2
-            "
-            data-bs-dismiss="modal"
-            aria-label="close"
-          >
-            <i class="fa fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h1 class="modal-title">Manage Employee</h1>
-          </div>
-          <form>
-            <div class="modal-body">
-              <input
-                type="text"
-                name="empFName"
-                id="empFName"
-                class="form-control mb-2"
-                placeholder="First Name"
-                maxlength="50"
-                pattern="[a-zA-Z\.' ]+"
-                required
-              />
-              <input
-                type="text"
-                name="empLName"
-                id="empLName"
-                class="form-control mb-2"
-                placeholder="Last Name"
-                maxlength="50"
-                pattern="[a-zA-Z\.' ]+"
-                required
-              />
-              <input
-                type="text"
-                name="empJob"
-                id="empJob"
-                class="form-control mb-2"
-                placeholder="Position"
-                maxlength="50"
-                pattern="[a-zA-Z\. ]+"
-                required
-              />
-              <input
-                type="email"
-                name="empEmail"
-                id="empEmail"
-                class="form-control mb-2"
-                placeholder="Email"
-                required
-              />
-              <select
-                name="empDept"
-                id="empDept"
-                class="form-select"
-                required
-              ></select>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-user-edit"></i>
-              </button>
-              <button type="submit" class="btn btn-danger" disabled>
-                <i class="fas fa-user-minus"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div id="LocModal" class="modal" tabindex="-1">
+    <div id="locModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <button
@@ -492,6 +414,84 @@
               </button>
               <button type="submit" class="btn btn-danger" disabled>
                 <i class="fas fa-folder-minus"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="pModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <h1 class="modal-title">Manage Personnel</h1>
+          </div>
+          <form>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="pFName"
+                id="pFName"
+                class="form-control mb-2"
+                placeholder="First Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="pLName"
+                id="pLName"
+                class="form-control mb-2"
+                placeholder="Last Name"
+                maxlength="50"
+                pattern="[a-zA-Z\.' ]+"
+                required
+              />
+              <input
+                type="text"
+                name="pJob"
+                id="pJob"
+                class="form-control mb-2"
+                placeholder="Position"
+                maxlength="50"
+                pattern="[a-zA-Z\. ]+"
+                required
+              />
+              <input
+                type="email"
+                name="pEmail"
+                id="pEmail"
+                class="form-control mb-2"
+                placeholder="Email"
+                required
+              />
+              <select
+                name="pDept"
+                id="pDept"
+                class="form-select"
+                required
+              ></select>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-user-edit"></i>
+              </button>
+              <button type="submit" class="btn btn-danger" disabled>
+                <i class="fas fa-user-minus"></i>
               </button>
             </div>
           </form>
