@@ -173,7 +173,7 @@ function configNewDeptModal() {
 }
 
 function configNewPModal() {
-  $.getJSON("php/getList", { table: "department" }, function (data) {
+  $.getJSON("php/getDepartments", function (data) {
     if (data.status.code == 200) {
       const depts = data.data || null;
       if (depts && depts.length) {
@@ -181,7 +181,7 @@ function configNewPModal() {
         Select Department
       </option>`);
         depts.forEach((d) => {
-          $("#newPDept").append(`<option value="${d.name}">${d.name}</option>`);
+          $("#newPDept").append(`<option value="${d.id}">${d.name}</option>`);
         });
         $("#newPModal").modal("show");
       }
@@ -440,6 +440,29 @@ function newLocation(event) {
       $("#newLocAlert").fadeIn().delay(3000).fadeOut();
     }
   });
+}
+
+function newPersonnel(event) {
+  event.preventDefault();
+  $fName = $("#newPFName").val();
+  $lName = $("#newPLName").val();
+  $job = $("#newPJob").val();
+  $email = $("#newPEmail").val();
+  $deptID = $("#newPDept").val();
+  console.log("f", $fName);
+  console.log("l", $lName);
+  console.log("j", $job);
+  console.log("e", $email);
+  console.log("d", $deptID);
+  $.post(
+    "php/newPersonnel",
+    { fName: $fName, lName: $lName, job: $job, email: $email, deptID: $deptID },
+    function (data) {
+      if (data.status.code == 201) {
+        $("#newPAlert").fadeIn().delay(3000).fadeOut();
+      }
+    }
+  );
 }
 
 function openMenuBar() {

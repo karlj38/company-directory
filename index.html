@@ -278,12 +278,12 @@
           <div class="modal-header">
             <h2 class="modal-title">New Personnel</h2>
           </div>
-          <form id="newPForm">
+          <form id="newPForm" onsubmit="newPersonnel(event)">
             <div class="modal-body">
               <input
                 type="text"
                 name="newPFName"
-                id="newPFname"
+                id="newPFName"
                 class="form-control mb-3"
                 placeholder="First Name"
                 maxlength="50"
@@ -330,6 +330,9 @@
                 </option>
               </select>
               <div class="modal-footer">
+                <div id="newPAlert" class="alert alert-success flex-fill p-1" role="alert">
+                  New personnel created
+                </div>
                 <button type="submit" class="btn btn-success">
                   <i class="fas fa-user-plus"></i>
                 </button>
