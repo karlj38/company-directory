@@ -1,5 +1,6 @@
 $(function () {
   getLocations();
+  $("form").trigger("reset");
 
   $(window).scroll(function () {
     if ($(this).scrollTop() > screen.availHeight / 2) {
@@ -430,6 +431,7 @@ function newDepartment(event) {
   $.post("php/newDepartment", { name: $name, locID: $locID }, function (data) {
     if (data.status.code == 201) {
       $("#newDeptAlert").fadeIn().delay(3000).fadeOut();
+      $("#newDeptForm").trigger("reset");
     }
   });
 }
@@ -440,6 +442,7 @@ function newLocation(event) {
   $.post("php/newLocation", { name: $name }, function (data) {
     if (data.status.code == 201) {
       $("#newLocAlert").fadeIn().delay(3000).fadeOut();
+      $("#newLocForm").trigger("reset");
     }
   });
 }
@@ -462,6 +465,7 @@ function newPersonnel(event) {
     function (data) {
       if (data.status.code == 201) {
         $("#newPAlert").fadeIn().delay(3000).fadeOut();
+        $("#newPForm").trigger("reset");
       }
     }
   );
