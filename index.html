@@ -184,7 +184,7 @@
           <div class="modal-header">
             <h2 class="modal-title">New Department</h2>
           </div>
-          <form id="newDeptForm">
+          <form id="newDeptForm" onsubmit="newDepartment(event)">
             <div class="modal-body">
               <input
                 type="text"
@@ -204,6 +204,9 @@
               ></select>
             </div>
             <div class="modal-footer">
+              <div id="newDeptAlert" class="alert alert-success flex-fill p-1" role="alert">
+                New department created
+              </div>
               <button type="submit" class="btn btn-success">
                 <i class="fas fa-folder-plus"></i>
               </button>
@@ -245,7 +248,7 @@
               />
               <div class="modal-footer">
                 <div id="newLocAlert" class="alert alert-success flex-fill p-1" role="alert">
-                  New location successfully added
+                  New location created
                 </div>
                 <button type="submit" class="btn btn-success">
                   <i class="fas fa-folder-plus"></i>

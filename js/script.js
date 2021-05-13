@@ -155,7 +155,7 @@ function configPModal(event, id = null) {
 }
 
 function configNewDeptModal() {
-  $.getJSON("php/getList", { table: "location" }, function (data) {
+  $.getJSON("php/getLocations", function (data) {
     if (data.status.code == 200) {
       const locs = data.data || null;
       if (locs && locs.length) {
@@ -164,9 +164,7 @@ function configNewDeptModal() {
         Select Location
       </option>`);
         locs.forEach((l) => {
-          $("#newDeptLoc").append(
-            `<option value="${l.name}">${l.name}</option>`
-          );
+          $("#newDeptLoc").append(`<option value="${l.id}">${l.name}</option>`);
         });
         $("#newDeptModal").modal("show");
       }
@@ -423,11 +421,24 @@ function getLocations() {
   });
 }
 
+function newDepartment(event) {
+  event.preventDefault();
+  $name = $("#newDept").val();
+  $locID = $("#newDeptLoc").val();
+  $.post("php/newDepartment", { name: $name, locID: $locID }, function (data) {
+    if (data.status.code == 201) {
+      $("#newDeptAlert").fadeIn().delay(3000).fadeOut();
+    }
+  });
+}
+
 function newLocation(event) {
   event.preventDefault();
   $name = $("#newLoc").val();
   $.post("php/newLocation", { name: $name }, function (data) {
-    $("#newLocAlert").fadeIn().delay(3000).fadeOut();
+    if (data.status.code == 201) {
+      $("#newLocAlert").fadeIn().delay(3000).fadeOut();
+    }
   });
 }
 
