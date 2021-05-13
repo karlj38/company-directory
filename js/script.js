@@ -58,6 +58,8 @@ function advSearch(event, table = null, col = null, term = null) {
             table = table[0].toUpperCase() + table.substr(1);
             $("#currentView").text(`Custom ${table} Results`);
           }
+        } else {
+          alert("No results found");
         }
       }
       $("#advSearch").trigger("reset");
@@ -373,8 +375,12 @@ function getLocation(id) {
 function getDepartments() {
   $.getJSON("php/getList", { table: "department" }, function (data) {
     const depts = data.data || null;
-    if (data.status.code == 200 && depts && depts.length) {
-      displayDepartments(depts);
+    if (data.status.code == 200) {
+      if (depts && depts.length) {
+        displayDepartments(depts);
+      } else {
+        alert("No results found");
+      }
     }
   });
 }
@@ -382,8 +388,12 @@ function getDepartments() {
 function getPersonnel() {
   $.getJSON("php/getList", { table: "personnel" }, function (data) {
     const staff = data.data || null;
-    if (data.status.code == 200 && staff && staff.length) {
-      displayPersonnel(staff);
+    if (data.status.code == 200) {
+      if (staff && staff.length) {
+        displayPersonnel(staff);
+      } else {
+        alert("No results found");
+      }
     }
   });
 }
@@ -391,8 +401,12 @@ function getPersonnel() {
 function getLocations() {
   $.getJSON("php/getList", { table: "location" }, function (data) {
     const locs = data.data || null;
-    if (data.status.code == 200 && locs && locs.length) {
-      displayLocations(locs);
+    if (data.status.code == 200) {
+      if (locs && locs.length) {
+        displayLocations(locs);
+      } else {
+        alert("No results found");
+      }
     }
   });
 }
