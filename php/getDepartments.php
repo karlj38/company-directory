@@ -34,7 +34,7 @@ if ($col && $operator && $condition) {
     $where = "WHERE $col $operator '$condition'";
 }
 
-$query = "SELECT d.id, d.name, l.name as location, COUNT(*) as personnel
+$query = "SELECT d.id, d.name, l.name as location, COUNT(p.departmentID) as personnel
 FROM department d
 LEFT JOIN location l ON (l.id = d.locationID)
 LEFT JOIN personnel p ON (p.departmentID = d.ID)
