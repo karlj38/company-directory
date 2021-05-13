@@ -24,11 +24,22 @@ function advSearch(event, table = null, col = null, term = null) {
     order = $("#orderBy").val();
     sort = $("#sortBy").val();
   }
-
+  url = "";
+  switch (table) {
+    case "department":
+      url = "php/getDepartments";
+      break;
+    case "location":
+      url = "php/getLocations";
+      break;
+    case "personnel":
+      url = "php/getPersonnel";
+    default:
+      break;
+  }
   $.getJSON(
-    "php/getList",
+    url,
     {
-      table: table,
       column: col,
       operator: op,
       condition: condition,
@@ -374,7 +385,7 @@ function getLocation(id) {
 }
 
 function getDepartments() {
-  $.getJSON("php/getList", { table: "department" }, function (data) {
+  $.getJSON("php/getDepartments", function (data) {
     const depts = data.data || null;
     if (data.status.code == 200) {
       if (depts && depts.length) {
@@ -387,7 +398,7 @@ function getDepartments() {
 }
 
 function getPersonnel() {
-  $.getJSON("php/getList", { table: "personnel" }, function (data) {
+  $.getJSON("php/getPersonnel", function (data) {
     const staff = data.data || null;
     if (data.status.code == 200) {
       if (staff && staff.length) {
@@ -400,7 +411,7 @@ function getPersonnel() {
 }
 
 function getLocations() {
-  $.getJSON("php/getList", { table: "location" }, function (data) {
+  $.getJSON("php/getLocations", function (data) {
     const locs = data.data || null;
     if (data.status.code == 200) {
       if (locs && locs.length) {
