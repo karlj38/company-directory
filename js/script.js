@@ -1,5 +1,6 @@
 $(function () {
-  $("#preloader").fadeOut().remove();
+  getLocations();
+
   $(window).scroll(function () {
     if ($(this).scrollTop() > screen.availHeight / 2) {
       $("#toTop").fadeIn();
@@ -7,6 +8,7 @@ $(function () {
       $("#toTop").fadeOut();
     }
   });
+  $("#preloader").fadeOut().remove();
 });
 
 function advSearch(event, table = null, col = null, term = null) {
