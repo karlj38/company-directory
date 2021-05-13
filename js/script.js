@@ -423,6 +423,14 @@ function getLocations() {
   });
 }
 
+function newLocation(event) {
+  event.preventDefault();
+  $name = $("#newLoc").val();
+  $.post("php/newLocation", { name: $name }, function (data) {
+    $("#newLocAlert").fadeIn().delay(3000).fadeOut();
+  });
+}
+
 function openMenuBar() {
   $("#menuBar, #overlay").addClass("active");
 }

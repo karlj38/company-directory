@@ -110,3 +110,7 @@
 #toTop {
   display: none;
 }
+
+.alert {
+  display: none;
+}

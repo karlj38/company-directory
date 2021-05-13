@@ -231,7 +231,7 @@
           <div class="modal-header">
             <h2 class="modal-title">New Location</h2>
           </div>
-          <form id="newLocForm">
+          <form id="newLocForm" onsubmit="newLocation(event)">
             <div class="modal-body">
               <input
                 type="text"
@@ -244,6 +244,9 @@
                 required
               />
               <div class="modal-footer">
+                <div id="newLocAlert" class="alert alert-success flex-fill p-1" role="alert">
+                  New location successfully added
+                </div>
                 <button type="submit" class="btn btn-success">
                   <i class="fas fa-folder-plus"></i>
                 </button>
