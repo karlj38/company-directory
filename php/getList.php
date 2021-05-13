@@ -67,7 +67,7 @@ if ($table = $_GET["table"] ?? null) {
             ORDER BY $order ";
             break;
         case 'location':
-            $query = "SELECT l.id, l.name, d.name as dept, COUNT(*) as personnel
+            $query = "SELECT l.id, l.name, COUNT(*) as personnel
             FROM location l
             LEFT JOIN department d ON (d.locationID = l.id)
             LEFT JOIN personnel p ON (p.departmentID = d.id)
@@ -82,6 +82,14 @@ if ($table = $_GET["table"] ?? null) {
     $result = db($query);
     $data = [];
     while ($row = $result->fetch_assoc()) {
+        if ($table == "location") {
+            $id = $row["id"];
+            $query = "SELECT COUNT(*) as departments FROM department WHERE locationID = '$id'";
+            $countResult = db($query);
+            while ($countRow = $countResult->fetch_assoc()) {
+                $row["departments"] = $countRow["departments"];
+            }
+        }
         array_push($data, $row);
     }
     json(200, "ok", "success", $data);

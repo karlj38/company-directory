@@ -239,6 +239,7 @@ function displayLocations(locs) {
     $card.append($cardHeader);
 
     let $cardBody = $(`<div class="card-body"></div>`);
+    $cardBody.append(`<p class="card-text">Departments: ${l.departments}</p>`);
     $cardBody.append(`<p class="card-text">Personnel: ${l.personnel}</p>`);
     $card.append($cardBody);
 
