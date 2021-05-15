@@ -377,6 +377,7 @@ function getLocation(id) {
       if ((data.data || null) && data.data.length) {
         const l = data.data[0];
         $("#locName").val(l.name);
+        $("#locID").text(id);
         $("#locModal").modal("show");
       } else {
         alert("No result found");
@@ -498,4 +499,24 @@ function toggleAdvSearch() {
 
 function toTop() {
   $("html, body").animate({ scrollTop: 0 }, 500);
+}
+
+function updateLocation(event) {
+  event.preventDefault();
+  const $name = $("#locName").val();
+  const $id = $("#locID").text();
+  const confirmation = confirm(`Are you sure you wish to edit ${$name}?`);
+  if (confirmation) {
+    $.ajax({
+      url: "php/updateLocation",
+      type: "PUT",
+      data: { id: $id, name: $name },
+      success: function (data) {
+        if (data.status.code == 200) {
+          getLocations();
+          $("#updateLAlert").fadeIn().delay(3000).fadeOut();
+        }
+      },
+    });
+  }
 }

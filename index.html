@@ -423,9 +423,13 @@
                 pattern="[a-zA-Z\. ]+"
                 required
               />
+              <div id="locID" class="d-none"></div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-secondary">
+              <div id="updateLAlert" class="alert alert-success flex-fill p-1" role="alert">
+                Location updated
+              </div>
+              <button type="submit" class="btn btn-secondary" onclick="updateLocation(event)">
                 <i class="fas fa-edit"></i>
               </button>
               <button type="submit" class="btn btn-danger" disabled>
