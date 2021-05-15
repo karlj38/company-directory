@@ -127,13 +127,13 @@ function configAdvSearch() {
 }
 
 function configDeptModal(id) {
-  $.getJSON("php/getList", { table: "location" }, function (data) {
+  $.getJSON("php/getLocations", function (data) {
     if (data.status.code == 200) {
-      const depts = data.data || null;
-      if (depts && depts.length) {
+      const locs = data.data || null;
+      if (locs && locs.length) {
         $("#deptLoc").empty();
-        depts.forEach((d) => {
-          $("#deptLoc").append(`<option value="${d.name}">${d.name}</option>`);
+        locs.forEach((l) => {
+          $("#deptLoc").append(`<option value="${l.id}">${l.name}</option>`);
         });
         getDepartment(id);
       }
@@ -143,13 +143,13 @@ function configDeptModal(id) {
 
 function configPModal(event, id = null) {
   event.preventDefault();
-  $.getJSON("php/getList", { table: "department" }, function (data) {
+  $.getJSON("php/getDepartments", function (data) {
     if (data.status.code == 200) {
       const depts = data.data || null;
       if (depts && depts.length) {
         $("#pDept").empty();
         depts.forEach((d) => {
-          $("#pDept").append(`<option value="${d.name}">${d.name}</option>`);
+          $("#pDept").append(`<option value="${d.id}">${d.name}</option>`);
         });
         getPerson(id || $("#search").val());
       }
@@ -344,7 +344,8 @@ function getDepartment(id) {
       if ((data.data || null) && data.data.length) {
         const d = data.data[0];
         $("#deptName").val(d.name);
-        $("#deptLoc").val(d.location);
+        $("#deptLoc").val(d.locID);
+        $("#deptID").text(id);
         $("#deptModal").modal("show");
       } else {
         alert("No result found");
@@ -362,7 +363,8 @@ function getPerson(id) {
         $("#pLName").val(p.lastName);
         $("#pJob").val(p.jobTitle);
         $("#pEmail").val(p.email);
-        $("#pDept").val(p.department);
+        $("#pDept").val(p.deptID);
+        $("#pID").text(id);
         $("#pModal").modal("show");
       } else {
         alert("No result found");

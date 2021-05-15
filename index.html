@@ -379,9 +379,13 @@
                 class="form-select"
                 required
               ></select>
+              <div id="deptID" class="d-none"></div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-secondary">
+              <div id="updateDAlert" class="alert alert-success flex-fill p-1" role="alert">
+                Department updated
+              </div>
+              <button type="submit" class="btn btn-secondary" onclick="updateDepartment(event)">
                 <i class="fas fa-edit"></i>
               </button>
               <button type="submit" class="btn btn-danger" disabled>
@@ -505,10 +509,14 @@
                 class="form-select"
                 required
               ></select>
+              <div id="deptID" class="d-none"></div>
             </div>
             <div class="modal-footer">
+              <div id="updatePAlert" class="alert alert-success flex-fill p-1" role="alert">
+                Personnel updated
+              </div>
               <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-user-edit"></i>
+                                <i class="fas fa-user-edit"></i>
               </button>
               <button type="submit" class="btn btn-danger" disabled>
                 <i class="fas fa-user-minus"></i>

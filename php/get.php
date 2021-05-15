@@ -8,7 +8,7 @@ if ($type = $_GET["type"] ?? null) {
             $query = "";
             switch ($type) {
                 case 'department':
-                    $query = "SELECT d.id, d.name, l.name as location
+                    $query = "SELECT d.id, d.name, l.id as locID, l.name as location
                     FROM department d
                     LEFT JOIN location l ON (l.id = d.locationID)
                     WHERE d.id = '$id'
@@ -21,7 +21,7 @@ if ($type = $_GET["type"] ?? null) {
                     ORDER BY name";
                     break;
                 case 'personnel':
-                    $query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location
+                    $query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.id as deptID, d.name as department, l.name as location
                         FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID)
                         LEFT JOIN location l ON (l.id = d.locationID)
                         WHERE p.id = '$id'
