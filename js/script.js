@@ -192,6 +192,30 @@ function configNewPModal() {
   });
 }
 
+function deletePersonnel() {
+  const $id = $("#pID").text();
+  const $pFName = $("#pFName").val();
+  const $pLName = $("#pLName").val();
+  const confirmation = confirm(
+    `Are you sure you wish to delete ${$pFName} ${$pLName}?`
+  );
+  if (confirmation) {
+    $.ajax({
+      url: "php/deletePersonnel",
+      type: "DELETE",
+      data: {
+        id: $id,
+      },
+      success: function (data) {
+        if (data.status.code == 200) {
+          getPersonnel();
+          $("#pModal").modal("hide");
+        }
+      },
+    });
+  }
+}
+
 function displayDepartments(depts) {
   $("#grid").empty();
   depts.forEach(function (d) {
