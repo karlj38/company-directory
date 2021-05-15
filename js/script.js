@@ -438,6 +438,7 @@ function newDepartment(event) {
       { name: $name, locID: $locID },
       function (data) {
         if (data.status.code == 201) {
+          getDepartments();
           $("#newDeptAlert").fadeIn().delay(3000).fadeOut();
           $("#newDeptForm").trigger("reset");
         }
@@ -453,6 +454,7 @@ function newLocation(event) {
   if (confirmation) {
     $.post("php/newLocation", { name: $name }, function (data) {
       if (data.status.code == 201) {
+        getLocations();
         $("#newLocAlert").fadeIn().delay(3000).fadeOut();
         $("#newLocForm").trigger("reset");
       }
@@ -482,6 +484,7 @@ function newPersonnel(event) {
       },
       function (data) {
         if (data.status.code == 201) {
+          getPersonnel();
           $("#newPAlert").fadeIn().delay(3000).fadeOut();
           $("#newPForm").trigger("reset");
         }
