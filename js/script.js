@@ -503,6 +503,27 @@ function toTop() {
   $("html, body").animate({ scrollTop: 0 }, 500);
 }
 
+function updateDepartment(event) {
+  event.preventDefault();
+  const $id = $("#deptID").text();
+  const $name = $("#deptName").val();
+  const $locID = $("#deptLoc").val();
+  const confirmation = confirm(`Are you sure you wish to edit ${$name}?`);
+  if (confirmation) {
+    $.ajax({
+      url: "php/updateDepartment",
+      type: "PUT",
+      data: { id: $id, name: $name, locID: $locID },
+      success: function (data) {
+        if (data.status.code == 200) {
+          getDepartments();
+          $("#updateDAlert").fadeIn().delay(3000).fadeOut();
+        }
+      },
+    });
+  }
+}
+
 function updateLocation(event) {
   event.preventDefault();
   const $name = $("#locName").val();
