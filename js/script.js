@@ -192,6 +192,27 @@ function configNewPModal() {
   });
 }
 
+function deleteDepartment() {
+  const $id = $("#deptID").text();
+  const $name = $("#deptName").val();
+  const confirmation = confirm(`Are you sure you wish to delete ${$name}?`);
+  if (confirmation) {
+    $.ajax({
+      url: "php/deleteDepartment",
+      type: "DELETE",
+      data: {
+        id: $id,
+      },
+      success: function (data) {
+        if (data.status.code == 200) {
+          getDepartments();
+          $("#deptModal").modal("hide");
+        }
+      },
+    });
+  }
+}
+
 function deletePersonnel() {
   const $id = $("#pID").text();
   const $pFName = $("#pFName").val();
@@ -373,6 +394,11 @@ function getDepartment(id) {
           $("#deptName").val(d.name);
           $("#deptLoc").val(d.locID);
           $("#deptID").text(id);
+          if (d.personnel == 0) {
+            $("#deleteDept").show();
+          } else {
+            $("#deleteDept").hide();
+          }
           $("#deptModal").modal("show");
         } else {
           alert("No result found");
