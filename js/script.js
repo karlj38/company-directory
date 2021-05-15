@@ -426,49 +426,65 @@ function getLocations() {
 
 function newDepartment(event) {
   event.preventDefault();
-  $name = $("#newDept").val();
-  $locID = $("#newDeptLoc").val();
-  $.post("php/newDepartment", { name: $name, locID: $locID }, function (data) {
-    if (data.status.code == 201) {
-      $("#newDeptAlert").fadeIn().delay(3000).fadeOut();
-      $("#newDeptForm").trigger("reset");
-    }
-  });
+  const $name = $("#newDept").val();
+  const $locID = $("#newDeptLoc").val();
+  const confirmation = confirm(`Are you sure you wish to create ${$name}?`);
+  if (confirmation) {
+    $.post(
+      "php/newDepartment",
+      { name: $name, locID: $locID },
+      function (data) {
+        if (data.status.code == 201) {
+          $("#newDeptAlert").fadeIn().delay(3000).fadeOut();
+          $("#newDeptForm").trigger("reset");
+        }
+      }
+    );
+  }
 }
 
 function newLocation(event) {
   event.preventDefault();
-  $name = $("#newLoc").val();
-  $.post("php/newLocation", { name: $name }, function (data) {
-    if (data.status.code == 201) {
-      $("#newLocAlert").fadeIn().delay(3000).fadeOut();
-      $("#newLocForm").trigger("reset");
-    }
-  });
+  const $name = $("#newLoc").val();
+  const confirmation = confirm(`Are you sure you wish to create ${$name}?`);
+  if (confirmation) {
+    $.post("php/newLocation", { name: $name }, function (data) {
+      if (data.status.code == 201) {
+        $("#newLocAlert").fadeIn().delay(3000).fadeOut();
+        $("#newLocForm").trigger("reset");
+      }
+    });
+  }
 }
 
 function newPersonnel(event) {
   event.preventDefault();
-  $fName = $("#newPFName").val();
-  $lName = $("#newPLName").val();
-  $job = $("#newPJob").val();
-  $email = $("#newPEmail").val();
-  $deptID = $("#newPDept").val();
-  console.log("f", $fName);
-  console.log("l", $lName);
-  console.log("j", $job);
-  console.log("e", $email);
-  console.log("d", $deptID);
-  $.post(
-    "php/newPersonnel",
-    { fName: $fName, lName: $lName, job: $job, email: $email, deptID: $deptID },
-    function (data) {
-      if (data.status.code == 201) {
-        $("#newPAlert").fadeIn().delay(3000).fadeOut();
-        $("#newPForm").trigger("reset");
-      }
-    }
+  const $fName = $("#newPFName").val();
+  const $lName = $("#newPLName").val();
+  const $job = $("#newPJob").val();
+  const $email = $("#newPEmail").val();
+  const $deptID = $("#newPDept").val();
+  const confirmation = confirm(
+    `Are you sure you wish to create ${$fName} ${lName}?`
   );
+  if (confirmation) {
+    $.post(
+      "php/newPersonnel",
+      {
+        fName: $fName,
+        lName: $lName,
+        job: $job,
+        email: $email,
+        deptID: $deptID,
+      },
+      function (data) {
+        if (data.status.code == 201) {
+          $("#newPAlert").fadeIn().delay(3000).fadeOut();
+          $("#newPForm").trigger("reset");
+        }
+      }
+    );
+  }
 }
 
 function openMenuBar() {
