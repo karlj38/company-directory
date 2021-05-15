@@ -363,53 +363,65 @@ function displayPersonnel(staff) {
 }
 
 function getDepartment(id) {
-  $.getJSON("php/get", { type: "department", id: id }, function (data, status) {
-    if (data.status.code == 200) {
-      if ((data.data || null) && data.data.length) {
-        const d = data.data[0];
-        $("#deptName").val(d.name);
-        $("#deptLoc").val(d.locID);
-        $("#deptID").text(id);
-        $("#deptModal").modal("show");
-      } else {
-        alert("No result found");
+  $.getJSON(
+    "php/getDepartments",
+    { column: "d.id", operator: "equal", condition: id },
+    function (data, status) {
+      if (data.status.code == 200) {
+        if ((data.data || null) && data.data.length) {
+          const d = data.data[0];
+          $("#deptName").val(d.name);
+          $("#deptLoc").val(d.locID);
+          $("#deptID").text(id);
+          $("#deptModal").modal("show");
+        } else {
+          alert("No result found");
+        }
       }
     }
-  });
+  );
 }
 
 function getLocation(id) {
-  $.getJSON("php/get", { type: "location", id: id }, function (data, status) {
-    if (data.status.code == 200) {
-      if ((data.data || null) && data.data.length) {
-        const l = data.data[0];
-        $("#locName").val(l.name);
-        $("#locID").text(id);
-        $("#locModal").modal("show");
-      } else {
-        alert("No result found");
+  $.getJSON(
+    "php/getLocations",
+    { column: "l.id", operator: "equal", condition: id },
+    function (data, status) {
+      if (data.status.code == 200) {
+        if ((data.data || null) && data.data.length) {
+          const l = data.data[0];
+          $("#locName").val(l.name);
+          $("#locID").text(id);
+          $("#locModal").modal("show");
+        } else {
+          alert("No result found");
+        }
       }
     }
-  });
+  );
 }
 
 function getPerson(id) {
-  $.getJSON("php/get", { type: "personnel", id: id }, function (data, status) {
-    if (data.status.code == 200) {
-      if ((data.data || null) && data.data.length) {
-        const p = data.data[0];
-        $("#pFName").val(p.firstName);
-        $("#pLName").val(p.lastName);
-        $("#pJob").val(p.jobTitle);
-        $("#pEmail").val(p.email);
-        $("#pDept").val(p.deptID);
-        $("#pID").text(id);
-        $("#pModal").modal("show");
-      } else {
-        alert("No result found");
+  $.getJSON(
+    "php/getPersonnel",
+    { column: "p.id", operator: "equal", condition: id },
+    function (data, status) {
+      if (data.status.code == 200) {
+        if ((data.data || null) && data.data.length) {
+          const p = data.data[0];
+          $("#pFName").val(p.firstName);
+          $("#pLName").val(p.lastName);
+          $("#pJob").val(p.jobTitle);
+          $("#pEmail").val(p.email);
+          $("#pDept").val(p.deptID);
+          $("#pID").text(id);
+          $("#pModal").modal("show");
+        } else {
+          alert("No result found");
+        }
       }
     }
-  });
+  );
 }
 
 function getDepartments() {
