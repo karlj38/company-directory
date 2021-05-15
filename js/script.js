@@ -354,6 +354,21 @@ function getDepartment(id) {
   });
 }
 
+function getLocation(id) {
+  $.getJSON("php/get", { type: "location", id: id }, function (data, status) {
+    if (data.status.code == 200) {
+      if ((data.data || null) && data.data.length) {
+        const l = data.data[0];
+        $("#locName").val(l.name);
+        $("#locID").text(id);
+        $("#locModal").modal("show");
+      } else {
+        alert("No result found");
+      }
+    }
+  });
+}
+
 function getPerson(id) {
   $.getJSON("php/get", { type: "personnel", id: id }, function (data, status) {
     if (data.status.code == 200) {
@@ -366,21 +381,6 @@ function getPerson(id) {
         $("#pDept").val(p.deptID);
         $("#pID").text(id);
         $("#pModal").modal("show");
-      } else {
-        alert("No result found");
-      }
-    }
-  });
-}
-
-function getLocation(id) {
-  $.getJSON("php/get", { type: "location", id: id }, function (data, status) {
-    if (data.status.code == 200) {
-      if ((data.data || null) && data.data.length) {
-        const l = data.data[0];
-        $("#locName").val(l.name);
-        $("#locID").text(id);
-        $("#locModal").modal("show");
       } else {
         alert("No result found");
       }
@@ -468,7 +468,7 @@ function newPersonnel(event) {
   const $email = $("#newPEmail").val();
   const $deptID = $("#newPDept").val();
   const confirmation = confirm(
-    `Are you sure you wish to create ${$fName} ${lName}?`
+    `Are you sure you wish to create ${$fName} ${$lName}?`
   );
   if (confirmation) {
     $.post(
@@ -538,6 +538,39 @@ function updateLocation(event) {
         if (data.status.code == 200) {
           getLocations();
           $("#updateLAlert").fadeIn().delay(3000).fadeOut();
+        }
+      },
+    });
+  }
+}
+
+function updatePersonnel(event) {
+  event.preventDefault();
+  const $id = $("#pID").text();
+  const $pFName = $("#pFName").val();
+  const $pLName = $("#pLName").val();
+  const $pJob = $("#pJob").val();
+  const $pEmail = $("#pEmail").val();
+  const $pDeptID = $("#pDept").val();
+  const confirmation = confirm(
+    `Are you sure you wish to edit ${$pFName} ${$pLName}?`
+  );
+  if (confirmation) {
+    $.ajax({
+      url: "php/updatePersonnel",
+      type: "PUT",
+      data: {
+        id: $id,
+        fName: $pFName,
+        lName: $pLName,
+        job: $pJob,
+        email: $pEmail,
+        deptID: $pDeptID,
+      },
+      success: function (data) {
+        if (data.status.code == 200) {
+          getPersonnel();
+          $("#updatePAlert").fadeIn().delay(3000).fadeOut();
         }
       },
     });
