@@ -192,7 +192,8 @@ function configNewPModal() {
   });
 }
 
-function deleteDepartment() {
+function deleteDepartment(event) {
+  event.preventDefault();
   const $id = $("#deptID").text();
   const $name = $("#deptName").val();
   const confirmation = confirm(`Are you sure you wish to delete ${$name}?`);
@@ -213,7 +214,30 @@ function deleteDepartment() {
   }
 }
 
-function deletePersonnel() {
+function deleteLocation(event) {
+  event.preventDefault();
+  const $id = $("#locID").text();
+  const $name = $("#locName").val();
+  const confirmation = confirm(`Are you sure you wish to delete ${$name}?`);
+  if (confirmation) {
+    $.ajax({
+      url: "php/deleteLocation",
+      type: "DELETE",
+      data: {
+        id: $id,
+      },
+      success: function (data) {
+        if (data.status.code == 200) {
+          getLocations();
+          $("#locModal").modal("hide");
+        }
+      },
+    });
+  }
+}
+
+function deletePersonnel(event) {
+  event.preventDefault();
   const $id = $("#pID").text();
   const $pFName = $("#pFName").val();
   const $pLName = $("#pLName").val();
@@ -418,6 +442,11 @@ function getLocation(id) {
           const l = data.data[0];
           $("#locName").val(l.name);
           $("#locID").text(id);
+          if (l.departments == 0 && l.personnel == 0) {
+            $("#deleteLoc").show();
+          } else {
+            $("#deleteLoc").hide();
+          }
           $("#locModal").modal("show");
         } else {
           alert("No result found");

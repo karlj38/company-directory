@@ -388,7 +388,7 @@
               <button type="submit" class="btn btn-secondary">
                 <i class="fas fa-edit"></i>
               </button>
-              <button id="deleteDept" class="btn btn-danger" onclick="deleteDepartment()">
+              <button id="deleteDept" type="button" class="btn btn-danger" onclick="deleteDepartment(event)">
                 <i class="fas fa-folder-minus"></i>
               </button>
             </div>
@@ -436,7 +436,7 @@
               <button type="submit" class="btn btn-secondary">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="btn btn-danger" disabled>
+              <button id="deleteLoc" type="button" class="btn btn-danger" onclick="deleteLocation(event)">
                 <i class="fas fa-folder-minus"></i>
               </button>
             </div>
@@ -517,7 +517,7 @@
               </div>
               <button type="submit" class="btn btn-secondary"><i class="fas fa-user-edit"></i>
               </button>
-              <button  class="btn btn-danger" onclick="deletePersonnel()">
+              <button type="button" class="btn btn-danger" onclick="deletePersonnel(event)">
                 <i class="fas fa-user-minus"></i>
               </button>
             </div>
