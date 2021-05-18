@@ -285,13 +285,13 @@ function displayDepartments(depts) {
     );
     $dropdown.append($dropButton);
     let $dropmenu = $(
-      `<div class="dropdown-menu" aria-labelled-by="l${d.id}View"></div>`
+      `<div class="dropdown-menu p-0" aria-labelled-by="l${d.id}View"></div>`
     );
     $dropmenu.append(
-      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${d.location}')">Location</a></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${d.location}')">Location</button></li>`
     );
     $dropmenu.append(
-      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${d.name}')">Personnel</a></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${d.name}')">Personnel</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
@@ -331,13 +331,13 @@ function displayLocations(locs) {
     );
     $dropdown.append($dropButton);
     let $dropmenu = $(
-      `<div class="dropdown-menu" aria-labelled-by="l${l.id}View"></div>`
+      `<div class="dropdown-menu p-0" aria-labelled-by="l${l.id}View"></div>`
     );
     $dropmenu.append(
-      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'l.name', '${l.name}')">Departments</a></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'l.name', '${l.name}')">Departments</button></li>`
     );
     $dropmenu.append(
-      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${l.name}')">Personnel</a></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${l.name}')">Personnel</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
@@ -385,13 +385,13 @@ function displayPersonnel(staff) {
     );
     $dropdown.append($dropButton);
     let $dropmenu = $(
-      `<div class="dropdown-menu" aria-labelled-by="l${p.id}View"></div>`
+      `<div class="dropdown-menu p-0" aria-labelled-by="l${p.id}View"></div>`
     );
     $dropmenu.append(
-      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'd.name', '${p.department}')">Department</a></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'd.name', '${p.department}')">Department</button></li>`
     );
     $dropmenu.append(
-      `<li><a class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${p.location}')">Location</a></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${p.location}')">Location</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
