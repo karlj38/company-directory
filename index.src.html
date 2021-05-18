@@ -207,6 +207,8 @@
               <div id="newDeptAlert" class="alert alert-success flex-fill p-1" role="alert">
                 New department created
               </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              aria-label="close">Cancel</button>
               <button type="submit" class="btn btn-success">
                 <i class="fas fa-folder-plus"></i>
               </button>
@@ -250,6 +252,8 @@
                 <div id="newLocAlert" class="alert alert-success flex-fill p-1" role="alert">
                   New location created
                 </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              aria-label="close">Cancel</button>
                 <button type="submit" class="btn btn-success">
                   <i class="fas fa-folder-plus"></i>
                 </button>
@@ -333,6 +337,8 @@
                 <div id="newPAlert" class="alert alert-success flex-fill p-1" role="alert">
                   New personnel created
                 </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              aria-label="close">Cancel</button>
                 <button type="submit" class="btn btn-success">
                   <i class="fas fa-user-plus"></i>
                 </button>
@@ -385,11 +391,10 @@
               <div id="updateDAlert" class="alert alert-success flex-fill p-1" role="alert">
                 Department updated
               </div>
-              <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button id="deleteDept" type="button" class="btn btn-danger" onclick="deleteDepartment(event)">
-                <i class="fas fa-folder-minus"></i>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              aria-label="close">Cancel</button>
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i>
               </button>
             </div>
           </form>
@@ -433,11 +438,10 @@
               <div id="updateLAlert" class="alert alert-success flex-fill p-1" role="alert">
                 Location updated
               </div>
-              <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button id="deleteLoc" type="button" class="btn btn-danger" onclick="deleteLocation(event)">
-                <i class="fas fa-folder-minus"></i>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              aria-label="close">Cancel</button>
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i>
               </button>
             </div>
           </form>
@@ -515,10 +519,9 @@
               <div id="updatePAlert" class="alert alert-success flex-fill p-1" role="alert">
                 Personnel updated
               </div>
-              <button type="submit" class="btn btn-secondary"><i class="fas fa-user-edit"></i>
-              </button>
-              <button type="button" class="btn btn-danger" onclick="deletePersonnel(event)">
-                <i class="fas fa-user-minus"></i>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              aria-label="close">Cancel</button>
+              <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>
               </button>
             </div>
           </form>

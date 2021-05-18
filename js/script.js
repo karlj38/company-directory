@@ -296,7 +296,12 @@ function displayDepartments(depts) {
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
     $cardFooter.append(
-      `<button class="btn btn-secondary btn-sm" onclick="configDeptModal(${d.id})"><i class="fa fa-edit"></i></button>`
+      `<button class="btn btn-secondary btn-sm me-2" onclick="configDeptModal(${d.id})"><i class="fa fa-edit"></i></button>`
+    );
+    $cardFooter.append(
+      `<button type="button" class="btn btn-danger btn-sm" onclick="deleteDepartment(${d.id})">
+      <i class="fas fa-folder-minus"></i>
+    </button>`
     );
     $card.append($cardFooter);
 
@@ -342,7 +347,12 @@ function displayLocations(locs) {
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
     $cardFooter.append(
-      `<button class="btn btn-secondary btn-sm" onclick="getLocation(${l.id})"><i class="fa fa-edit"></i></button>`
+      `<button class="btn btn-secondary btn-sm me-2" onclick="getLocation(${l.id})"><i class="fa fa-edit"></i></button>`
+    );
+    $cardFooter.append(
+      `<button id="deleteLoc" type="button" class="btn btn-danger btn-sm" onclick="deleteLocation(${l.id})">
+      <i class="fas fa-folder-minus"></i>
+    </button>`
     );
     $card.append($cardFooter);
 
@@ -396,7 +406,12 @@ function displayPersonnel(staff) {
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
     $cardFooter.append(
-      `<button class="btn btn-secondary btn-sm" onclick="configPModal(event, ${p.id})"><i class="fa fa-user-edit"></i></button>`
+      `<button class="btn btn-secondary btn-sm me-2" onclick="configPModal(event, ${p.id})"><i class="fa fa-user-edit"></i></button>`
+    );
+    $cardFooter.append(
+      `<button type="button" class="btn btn-danger btn-sm" onclick="deletePersonnel(${p.id})">
+      <i class="fas fa-user-minus"></i>
+    </button>`
     );
     $card.append($cardFooter);
 
