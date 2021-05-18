@@ -29,7 +29,7 @@
           w-100
         "
       >
-        <form id="IdSearch" onsubmit="configPModal(event)">
+        <form id="idSearch" onsubmit="configPModal(event)">
           <div class="input-group mb-2">
             <input
               type="search"
@@ -199,14 +199,15 @@
               <select
                 name="newDeptLoc"
                 id="newDeptLoc"
-                class="form-select"
+                class="form-select mb-2"
                 required
               ></select>
+              <div class="form-check">
+                <input type="checkbox" name="confirmNewDept" id="confirmNewDept" class="form-check-input" required>
+                <label for="confirmNewDept">Please confirm the information is correct.</label>
+              </div>
             </div>
             <div class="modal-footer">
-              <div id="newDeptAlert" class="alert alert-success flex-fill p-1" role="alert">
-                New department created
-              </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               aria-label="close">Cancel</button>
               <button type="submit" class="btn btn-success">
@@ -248,10 +249,12 @@
                 pattern="[a-zA-Z\. ]+"
                 required
               />
+              <div class="form-check">
+                <input type="checkbox" name="confirmNewLoc" id="confirmNewLoc" class="form-check-input" required>
+                <label for="confirmNewLoc">Please confirm the information is correct.</label>
+              </div>
+              </div>
               <div class="modal-footer">
-                <div id="newLocAlert" class="alert alert-success flex-fill p-1" role="alert">
-                  New location created
-                </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               aria-label="close">Cancel</button>
                 <button type="submit" class="btn btn-success">
@@ -326,17 +329,19 @@
               <select
                 name="newPDept"
                 id="newPDept"
-                class="form-select"
+                class="form-select mb-2"
                 required
               >
                 <option value="" selected disabled hidden>
                   Select Department
                 </option>
               </select>
+              <div class="form-check">
+                <input type="checkbox" name="confirmNewPerson" id="confirmNewPerson" class="form-check-input" required>
+                <label for="confirmNewPerson">Please confirm the information is correct.</label>
+              </div>
+              </div>
               <div class="modal-footer">
-                <div id="newPAlert" class="alert alert-success flex-fill p-1" role="alert">
-                  New personnel created
-                </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               aria-label="close">Cancel</button>
                 <button type="submit" class="btn btn-success">
@@ -367,7 +372,7 @@
           <div class="modal-header">
             <h2 class="modal-title">Manage Department</h2>
           </div>
-          <form onsubmit="updateDepartment(event)">
+          <form id="deptForm" onsubmit="updateDepartment(event)">
             <div class="modal-body">
               <input
                 type="text"
@@ -382,15 +387,16 @@
               <select
                 name="deptLoc"
                 id="deptLoc"
-                class="form-select"
+                class="form-select mb-2"
                 required
               ></select>
+              <div class="form-check">
+                <input type="checkbox" name="confirmEditDept" id="confirmEditDept" class="form-check-input" required>
+                <label for="confirmEditDept">Please confirm the information is correct.</label>
+              </div>
               <div id="deptID" class="d-none"></div>
             </div>
             <div class="modal-footer">
-              <div id="updateDAlert" class="alert alert-success flex-fill p-1" role="alert">
-                Department updated
-              </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               aria-label="close">Cancel</button>
               <button type="submit" class="btn btn-success">
@@ -420,7 +426,7 @@
           <div class="modal-header">
             <h2 class="modal-title">Manage Location</h2>
           </div>
-          <form onsubmit="updateLocation(event)">
+          <form id="locForm" onsubmit="updateLocation(event)">
             <div class="modal-body">
               <input
                 type="text"
@@ -432,12 +438,13 @@
                 pattern="[a-zA-Z\. ]+"
                 required
               />
+              <div class="form-check">
+                <input type="checkbox" name="confirmEditLoc" id="confirmEditLoc" class="form-check-input" required>
+                <label for="confirmEditLoc">Please confirm the information is correct.</label>
+              </div>
               <div id="locID" class="d-none"></div>
             </div>
             <div class="modal-footer">
-              <div id="updateLAlert" class="alert alert-success flex-fill p-1" role="alert">
-                Location updated
-              </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               aria-label="close">Cancel</button>
               <button type="submit" class="btn btn-success">
@@ -467,7 +474,7 @@
           <div class="modal-header">
             <h2 class="modal-title">Manage Personnel</h2>
           </div>
-          <form onsubmit="updatePersonnel(event)">
+          <form id="personnelForm" onsubmit="updatePersonnel(event)">
             <div class="modal-body">
               <input
                 type="text"
@@ -510,15 +517,16 @@
               <select
                 name="pDept"
                 id="pDept"
-                class="form-select"
+                class="form-select mb-2"
                 required
               ></select>
+              <div class="form-check">
+                <input type="checkbox" name="confirmEditPerson" id="confirmEditPerson" class="form-check-input" required>
+                <label for="confirmEditPerson">Please confirm the information is correct.</label>
+              </div>
               <div id="pID" class="d-none"></div>
             </div>
             <div class="modal-footer">
-              <div id="updatePAlert" class="alert alert-success flex-fill p-1" role="alert">
-                Personnel updated
-              </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               aria-label="close">Cancel</button>
               <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>

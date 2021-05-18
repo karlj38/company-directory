@@ -80,11 +80,43 @@ function advSearch(event, table = null, col = null, term = null) {
         } else {
           alert("No results found");
         }
+      } else {
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
       }
       $("#advSearch").trigger("reset");
       $("#expandedAdvSearch").slideUp();
     }
   );
+}
+
+function checkDeletion(table, id, name) {
+  let col, dependency, url;
+  switch (table) {
+    case "department":
+      col = "d.name";
+      dependency = "personnel";
+      break;
+
+    case "location":
+      col = "l.name";
+      dependency = "department";
+      break;
+  }
+  $.getJSON("php/checkDeletion", { table: table, id: id }, function (data) {
+    if (data.status.description == "safe to delete") {
+      configDeleteModal(table, id, name);
+    } else if (data.status.description == "cannot delete") {
+      $("#toastErrorMessage").empty();
+      $("#toastErrorMessage").append(
+        `<p>Cannot delete ${table} with existing ${dependency}.</p>`
+      );
+      $("#toastErrorMessage").append(
+        `<p><button type="button" class="btn btn-outline-primary" onclick="advSearch(event, '${dependency}', '${col}', '${name}')" data-bs-dismiss="toast">View dependecies</button></p>`
+      );
+      toastError.show();
+    }
+  });
 }
 
 function closeMenuBar() {
@@ -126,12 +158,16 @@ function configAdvSearch() {
           );
         });
       }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
     }
   });
   $("#expandedAdvSearch").slideDown();
 }
 
 function configDeptModal(id) {
+  $("#deptForm").trigger("reset");
   $.getJSON("php/getLocations", function (data) {
     if (data.status.code == 200) {
       const locs = data.data || null;
@@ -142,12 +178,21 @@ function configDeptModal(id) {
         });
         getDepartment(id);
       }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
     }
   });
 }
 
+function configLocModal(id) {
+  $("#LocForm").trigger("reset");
+  getLocation(id);
+}
+
 function configPModal(event, id = null) {
   event.preventDefault();
+  $("#idSearch, #personnelForm").trigger("reset");
   $.getJSON("php/getDepartments", function (data) {
     if (data.status.code == 200) {
       const depts = data.data || null;
@@ -158,11 +203,15 @@ function configPModal(event, id = null) {
         });
         getPerson(id || $("#search").val());
       }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
     }
   });
 }
 
 function configNewDeptModal() {
+  $("#newDeptForm").trigger("reset");
   $.getJSON("php/getLocations", function (data) {
     if (data.status.code == 200) {
       const locs = data.data || null;
@@ -176,11 +225,20 @@ function configNewDeptModal() {
         });
         $("#newDeptModal").modal("show");
       }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
     }
   });
 }
 
+function configNewLocForm() {
+  $("#newLocForm").trigger("reset");
+  $("#newLocModal").modal("show");
+}
+
 function configNewPModal() {
+  $("#newPForm").trigger("reset");
   $.getJSON("php/getDepartments", function (data) {
     if (data.status.code == 200) {
       const depts = data.data || null;
@@ -193,34 +251,8 @@ function configNewPModal() {
         });
         $("#newPModal").modal("show");
       }
-    }
-  });
-}
-
-function checkDeletion(table, id, name) {
-  let col, dependency, url;
-  switch (table) {
-    case "department":
-      col = "d.name";
-      dependency = "personnel";
-      break;
-
-    case "location":
-      col = "l.name";
-      dependency = "department";
-      break;
-  }
-  $.getJSON("php/checkDeletion", { table: table, id: id }, function (data) {
-    if (data.status.description == "safe to delete") {
-      configDeleteModal(table, id, name);
-    } else if (data.status.description == "cannot delete") {
-      $("toastErrorMessage").empty();
-      $("#toastErrorMessage").append(
-        `<p>Cannot delete ${table} with existing ${dependency}.</p>`
-      );
-      $("#toastErrorMessage").append(
-        `<p><button type="button" class="btn btn-outline-primary" onclick="advSearch(event, '${dependency}', '${col}', '${name}')" data-bs-dismiss="toast">View dependecies</button></p>`
-      );
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
       toastError.show();
     }
   });
@@ -254,11 +286,14 @@ function deleteEntry(table, id, name) {
           case "personnel":
             getPersonnel();
           default:
-            $("confirmDeleteModal").modal("hide");
+            $("#confirmDeleteModal").modal("hide");
             $("#toastSuccessMessage").text(`Deleted ${name}`);
             toastSuccess.show();
             break;
         }
+      } else {
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
       }
     },
   });
@@ -350,7 +385,7 @@ function displayLocations(locs) {
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
     $cardFooter.append(
-      `<button class="btn btn-secondary btn-sm me-2" onclick="getLocation(${l.id})"><i class="fa fa-edit"></i></button>`
+      `<button class="btn btn-secondary btn-sm me-2" onclick="configLocModal(${l.id})"><i class="fa fa-edit"></i></button>`
     );
     $cardFooter.append(
       `<button id="deleteLoc" type="button" class="btn btn-danger btn-sm" onclick="checkDeletion('location', ${l.id}, '${l.name}')">
@@ -437,15 +472,11 @@ function getDepartment(id) {
           $("#deptName").val(d.name);
           $("#deptLoc").val(d.locID);
           $("#deptID").text(id);
-          if (d.personnel == 0) {
-            $("#deleteDept").show();
-          } else {
-            $("#deleteDept").hide();
-          }
           $("#deptModal").modal("show");
-        } else {
-          alert("No result found");
         }
+      } else {
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
       }
     }
   );
@@ -461,15 +492,11 @@ function getLocation(id) {
           const l = data.data[0];
           $("#locName").val(l.name);
           $("#locID").text(id);
-          if (l.departments == 0 && l.personnel == 0) {
-            $("#deleteLoc").show();
-          } else {
-            $("#deleteLoc").hide();
-          }
           $("#locModal").modal("show");
-        } else {
-          alert("No result found");
         }
+      } else {
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
       }
     }
   );
@@ -490,9 +517,10 @@ function getPerson(id) {
           $("#pDept").val(p.deptID);
           $("#pID").text(id);
           $("#pModal").modal("show");
-        } else {
-          alert("No result found");
         }
+      } else {
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
       }
     }
   );
@@ -504,22 +532,10 @@ function getDepartments() {
     if (data.status.code == 200) {
       if (depts && depts.length) {
         displayDepartments(depts);
-      } else {
-        alert("No results found");
       }
-    }
-  });
-}
-
-function getPersonnel() {
-  $.getJSON("php/getPersonnel", function (data) {
-    const staff = data.data || null;
-    if (data.status.code == 200) {
-      if (staff && staff.length) {
-        displayPersonnel(staff);
-      } else {
-        alert("No results found");
-      }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
     }
   });
 }
@@ -530,9 +546,24 @@ function getLocations() {
     if (data.status.code == 200) {
       if (locs && locs.length) {
         displayLocations(locs);
-      } else {
-        alert("No results found");
       }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
+    }
+  });
+}
+
+function getPersonnel() {
+  $.getJSON("php/getPersonnel", function (data) {
+    const staff = data.data || null;
+    if (data.status.code == 200) {
+      if (staff && staff.length) {
+        displayPersonnel(staff);
+      }
+    } else {
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
     }
   });
 }
@@ -541,35 +572,37 @@ function newDepartment(event) {
   event.preventDefault();
   const $name = $("#newDept").val();
   const $locID = $("#newDeptLoc").val();
-  const confirmation = confirm(`Are you sure you wish to create ${$name}?`);
-  if (confirmation) {
-    $.post(
-      "php/newDepartment",
-      { name: $name, locID: $locID },
-      function (data) {
-        if (data.status.code == 201) {
-          getDepartments();
-          $("#newDeptAlert").fadeIn().delay(3000).fadeOut();
-          $("#newDeptForm").trigger("reset");
-        }
-      }
-    );
-  }
+  $.post("php/newDepartment", { name: $name, locID: $locID }, function (data) {
+    if (data.status.code == 201) {
+      getDepartments();
+      $("#newDeptModal").modal("hide");
+      $("#toastSuccessMessage").text(`${$name} created`);
+      toastSuccess.show();
+      $("#newDeptForm").trigger("reset");
+    } else {
+      $("#newDeptModal").modal("hide");
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
+    }
+  });
 }
 
 function newLocation(event) {
   event.preventDefault();
   const $name = $("#newLoc").val();
-  const confirmation = confirm(`Are you sure you wish to create ${$name}?`);
-  if (confirmation) {
-    $.post("php/newLocation", { name: $name }, function (data) {
-      if (data.status.code == 201) {
-        getLocations();
-        $("#newLocAlert").fadeIn().delay(3000).fadeOut();
-        $("#newLocForm").trigger("reset");
-      }
-    });
-  }
+  $.post("php/newLocation", { name: $name }, function (data) {
+    if (data.status.code == 201) {
+      getLocations();
+      $("#newLocModal").modal("hide");
+      $("#toastSuccessMessage").text(`${$name} created`);
+      toastSuccess.show();
+      $("#newLocForm").trigger("reset");
+    } else {
+      $("#newLocModal").modal("hide");
+      $("#toastErrorMessage").text(data.status.description);
+      toastError.show();
+    }
+  });
 }
 
 function newPersonnel(event) {
@@ -579,28 +612,29 @@ function newPersonnel(event) {
   const $job = $("#newPJob").val();
   const $email = $("#newPEmail").val();
   const $deptID = $("#newPDept").val();
-  const confirmation = confirm(
-    `Are you sure you wish to create ${$fName} ${$lName}?`
-  );
-  if (confirmation) {
-    $.post(
-      "php/newPersonnel",
-      {
-        fName: $fName,
-        lName: $lName,
-        job: $job,
-        email: $email,
-        deptID: $deptID,
-      },
-      function (data) {
-        if (data.status.code == 201) {
-          getPersonnel();
-          $("#newPAlert").fadeIn().delay(3000).fadeOut();
-          $("#newPForm").trigger("reset");
-        }
+  $.post(
+    "php/newPersonnel",
+    {
+      fName: $fName,
+      lName: $lName,
+      job: $job,
+      email: $email,
+      deptID: $deptID,
+    },
+    function (data) {
+      if (data.status.code == 201) {
+        getPersonnel();
+        $("#newPModal").modal("hide");
+        $("#toastSuccessMessage").text(`${$fName} ${$lName} created`);
+        toastSuccess.show();
+        $("#newPForm").trigger("reset");
+      } else {
+        $("#newPModal").modal("hide");
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
       }
-    );
-  }
+    }
+  );
 }
 
 function openMenuBar() {
@@ -621,40 +655,46 @@ function updateDepartment(event) {
   const $id = $("#deptID").text();
   const $name = $("#deptName").val();
   const $locID = $("#deptLoc").val();
-  const confirmation = confirm(`Are you sure you wish to edit ${$name}?`);
-  if (confirmation) {
-    $.ajax({
-      url: "php/updateDepartment",
-      type: "PUT",
-      data: { id: $id, name: $name, locID: $locID },
-      success: function (data) {
-        if (data.status.code == 200) {
-          getDepartments();
-          $("#updateDAlert").fadeIn().delay(3000).fadeOut();
-        }
-      },
-    });
-  }
+  $.ajax({
+    url: "php/updateDepartment",
+    type: "PUT",
+    data: { id: $id, name: $name, locID: $locID },
+    success: function (data) {
+      if (data.status.code == 200) {
+        getDepartments();
+        $("#deptModal").modal("hide");
+        $("#toastSuccessMessage").text(`${$name} updated`);
+        toastSuccess.show();
+      } else {
+        $("#deptModal").modal("hide");
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
+      }
+    },
+  });
 }
 
 function updateLocation(event) {
   event.preventDefault();
   const $name = $("#locName").val();
   const $id = $("#locID").text();
-  const confirmation = confirm(`Are you sure you wish to edit ${$name}?`);
-  if (confirmation) {
-    $.ajax({
-      url: "php/updateLocation",
-      type: "PUT",
-      data: { id: $id, name: $name },
-      success: function (data) {
-        if (data.status.code == 200) {
-          getLocations();
-          $("#updateLAlert").fadeIn().delay(3000).fadeOut();
-        }
-      },
-    });
-  }
+  $.ajax({
+    url: "php/updateLocation",
+    type: "PUT",
+    data: { id: $id, name: $name },
+    success: function (data) {
+      if (data.status.code == 200) {
+        getLocations();
+        $("#LocModal").modal("hide");
+        $("#toastSuccessMessage").text(`${$name} updated`);
+        toastSuccess.show();
+      } else {
+        $("#LocModal").modal("hide");
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
+      }
+    },
+  });
 }
 
 function updatePersonnel(event) {
@@ -665,27 +705,28 @@ function updatePersonnel(event) {
   const $pJob = $("#pJob").val();
   const $pEmail = $("#pEmail").val();
   const $pDeptID = $("#pDept").val();
-  const confirmation = confirm(
-    `Are you sure you wish to edit ${$pFName} ${$pLName}?`
-  );
-  if (confirmation) {
-    $.ajax({
-      url: "php/updatePersonnel",
-      type: "PUT",
-      data: {
-        id: $id,
-        fName: $pFName,
-        lName: $pLName,
-        job: $pJob,
-        email: $pEmail,
-        deptID: $pDeptID,
-      },
-      success: function (data) {
-        if (data.status.code == 200) {
-          getPersonnel();
-          $("#updatePAlert").fadeIn().delay(3000).fadeOut();
-        }
-      },
-    });
-  }
+  $.ajax({
+    url: "php/updatePersonnel",
+    type: "PUT",
+    data: {
+      id: $id,
+      fName: $pFName,
+      lName: $pLName,
+      job: $pJob,
+      email: $pEmail,
+      deptID: $pDeptID,
+    },
+    success: function (data) {
+      if (data.status.code == 200) {
+        getPersonnel();
+        $("#pModal").modal("hide");
+        $("#toastSuccessMessage").text(`${$pFName} ${$pLName} updated`);
+        toastSuccess.show();
+      } else {
+        $("#pModal").modal("hide");
+        $("#toastErrorMessage").text(data.status.description);
+        toastError.show();
+      }
+    },
+  });
 }
