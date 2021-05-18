@@ -528,6 +528,56 @@
         </div>
       </div>
     </div>
+    <div id="confirmDeleteModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button
+            class="
+              btn btn-sm btn-outline-secondary
+              position-absolute
+              end-0
+              mt-2
+              me-2
+            "
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <div class="modal-title">
+              <h3>Confirm</h3>
+            </div>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you wish to delete <span id="confirmTarget"></span>?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            aria-label="close">Cancel</button>
+            <button id="confirmDeleteButton" type="button" class="btn btn-danger">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="toastError" class="toast hide position-fixed top-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header justify-content-between">
+        <strong class="text-danger">Error</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="toastErrorMessage" class="toast-body">
+      </div>
+    </div>
+    <div id="toastSuccess" class="toast hide position-fixed top-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header justify-content-between">
+        <strong class="text-success">Success</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="toastSuccessMessage" class="toast-body">
+      </div>
+    </div>
     <div id="overlay" onclick="closeMenuBar()"></div>
     <div id="preloader"></div>
     <script src="vendors/jQuery-3.6.0/jquery-3.6.0.min.js"></script>

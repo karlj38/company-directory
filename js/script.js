@@ -10,6 +10,11 @@ $(function () {
     }
   });
   $("#preloader").fadeOut().remove();
+
+  const toastError = document.getElementById("toastError");
+  window.toastError = new bootstrap.Toast(toastError);
+  const toastSuccess = document.getElementById("toastSuccess");
+  window.toastSuccess = new bootstrap.Toast(toastSuccess);
 });
 
 function advSearch(event, table = null, col = null, term = null) {
@@ -192,73 +197,71 @@ function configNewPModal() {
   });
 }
 
-function deleteDepartment(event) {
-  event.preventDefault();
-  const $id = $("#deptID").text();
-  const $name = $("#deptName").val();
-  const confirmation = confirm(`Are you sure you wish to delete ${$name}?`);
-  if (confirmation) {
-    $.ajax({
-      url: "php/deleteDepartment",
-      type: "DELETE",
-      data: {
-        id: $id,
-      },
-      success: function (data) {
-        if (data.status.code == 200) {
-          getDepartments();
-          $("#deptModal").modal("hide");
-        }
-      },
-    });
+function checkDeletion(table, id, name) {
+  let col, dependency, url;
+  switch (table) {
+    case "department":
+      col = "d.name";
+      dependency = "personnel";
+      break;
+
+    case "location":
+      col = "l.name";
+      dependency = "department";
+      break;
   }
+  $.getJSON("php/checkDeletion", { table: table, id: id }, function (data) {
+    if (data.status.description == "safe to delete") {
+      configDeleteModal(table, id, name);
+    } else if (data.status.description == "cannot delete") {
+      $("toastErrorMessage").empty();
+      $("#toastErrorMessage").append(
+        `<p>Cannot delete ${table} with existing ${dependency}.</p>`
+      );
+      $("#toastErrorMessage").append(
+        `<p><button type="button" class="btn btn-outline-primary" onclick="advSearch(event, '${dependency}', '${col}', '${name}')" data-bs-dismiss="toast">View dependecies</button></p>`
+      );
+      toastError.show();
+    }
+  });
 }
 
-function deleteLocation(event) {
-  event.preventDefault();
-  const $id = $("#locID").text();
-  const $name = $("#locName").val();
-  const confirmation = confirm(`Are you sure you wish to delete ${$name}?`);
-  if (confirmation) {
-    $.ajax({
-      url: "php/deleteLocation",
-      type: "DELETE",
-      data: {
-        id: $id,
-      },
-      success: function (data) {
-        if (data.status.code == 200) {
-          getLocations();
-          $("#locModal").modal("hide");
-        }
-      },
-    });
-  }
-}
-
-function deletePersonnel(event) {
-  event.preventDefault();
-  const $id = $("#pID").text();
-  const $pFName = $("#pFName").val();
-  const $pLName = $("#pLName").val();
-  const confirmation = confirm(
-    `Are you sure you wish to delete ${$pFName} ${$pLName}?`
+function configDeleteModal(table, id, name) {
+  $("#confirmTarget").text(name);
+  $("#confirmDeleteButton").attr(
+    "onclick",
+    `deleteEntry('${table}', ${id}, '${name}')`
   );
-  if (confirmation) {
-    $.ajax({
-      url: "php/deletePersonnel",
-      type: "DELETE",
-      data: {
-        id: $id,
-      },
-      success: function (data) {
-        if (data.status.code == 200) {
-          getPersonnel();
-          $("#pModal").modal("hide");
+  $("#confirmDeleteModal").modal("show");
+}
+
+function deleteEntry(table, id, name) {
+  $.ajax({
+    url: "php/delete",
+    type: "DELETE",
+    data: {
+      table: table,
+      id: id,
+    },
+    success: function (data) {
+      if (data.status.code == 200) {
+        switch (table) {
+          case "department":
+            getDepartments();
+            break;
+          case "location":
+            getLocations();
+          case "personnel":
+            getPersonnel();
+          default:
+            $("confirmDeleteModal").modal("hide");
+            $("#toastSuccessMessage").text(`Deleted ${name}`);
+            toastSuccess.show();
+            break;
         }
-      },
-    });
-  }
+      }
+    },
+  });
 }
 
 function displayDepartments(depts) {
@@ -299,7 +302,7 @@ function displayDepartments(depts) {
       `<button class="btn btn-secondary btn-sm me-2" onclick="configDeptModal(${d.id})"><i class="fa fa-edit"></i></button>`
     );
     $cardFooter.append(
-      `<button type="button" class="btn btn-danger btn-sm" onclick="deleteDepartment(${d.id})">
+      `<button type="button" class="btn btn-danger btn-sm" onclick="checkDeletion('department', ${d.id}, '${d.name}')">
       <i class="fas fa-folder-minus"></i>
     </button>`
     );
@@ -350,7 +353,7 @@ function displayLocations(locs) {
       `<button class="btn btn-secondary btn-sm me-2" onclick="getLocation(${l.id})"><i class="fa fa-edit"></i></button>`
     );
     $cardFooter.append(
-      `<button id="deleteLoc" type="button" class="btn btn-danger btn-sm" onclick="deleteLocation(${l.id})">
+      `<button id="deleteLoc" type="button" class="btn btn-danger btn-sm" onclick="checkDeletion('location', ${l.id}, '${l.name}')">
       <i class="fas fa-folder-minus"></i>
     </button>`
     );
@@ -409,7 +412,7 @@ function displayPersonnel(staff) {
       `<button class="btn btn-secondary btn-sm me-2" onclick="configPModal(event, ${p.id})"><i class="fa fa-user-edit"></i></button>`
     );
     $cardFooter.append(
-      `<button type="button" class="btn btn-danger btn-sm" onclick="deletePersonnel(${p.id})">
+      `<button type="button" class="btn btn-danger btn-sm" onclick="configDeleteModal('personnel',${p.id}, '${p.firstName} ${p.lastName}')">
       <i class="fas fa-user-minus"></i>
     </button>`
     );
