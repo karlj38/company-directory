@@ -274,7 +274,7 @@ function displayDepartments(depts) {
     $card.append($cardHeader);
 
     let $cardBody = $(`<div class="card-body"></div>`);
-    $cardBody.append(`<p class="card-subtitle">${d.location}</p>`);
+    $cardBody.append(`<p class="card-text">${d.location}</p>`);
     $cardBody.append(`<p class="card-text">Personnel: ${d.personnel}</p>`);
     $card.append($cardBody);
 
@@ -371,7 +371,8 @@ function displayPersonnel(staff) {
     if (p.jobTitle || null) {
       $cardBody.append(`<p class="card-subtitle">${p.jobTitle}</p>`);
     }
-    $cardBody.append(`<p class="card-text">${p.department}, ${p.location}</p>`);
+    $cardBody.append(`<p class="card-text">${p.department}</p>`);
+    $cardBody.append(`<p class="card-text">${p.location}</p>`);
     $card.append($cardBody);
 
     let $cardFooter = $(`<div class="card-footer text-end"></div>`);
