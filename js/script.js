@@ -1,5 +1,5 @@
 $(function () {
-  getLocations();
+  getPersonnel();
   $("form").trigger("reset");
 
   $(window).scroll(function () {
