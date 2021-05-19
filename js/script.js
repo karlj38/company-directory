@@ -348,6 +348,7 @@ function displayDepartments(depts) {
     $("#grid").append($col);
   });
   $("#currentView").text("All Departments");
+  toTop();
   closeMenuBar();
 }
 
@@ -397,6 +398,7 @@ function displayLocations(locs) {
     $("#grid").append($col);
   });
   $("#currentView").text("All Locations");
+  toTop();
   closeMenuBar();
 }
 
@@ -459,6 +461,7 @@ function displayPersonnel(staff) {
     $("#grid").append($col);
   });
   $("#currentView").text("All Personnel");
+  toTop();
   closeMenuBar();
 }
 
@@ -647,8 +650,8 @@ function toggleAdvSearch() {
   $("#advSearch").slideToggle("fast");
 }
 
-function toTop() {
-  $("html, body").animate({ scrollTop: 0 }, 500);
+function toTop(duration = 0) {
+  $("html, body").animate({ scrollTop: 0 }, duration);
 }
 
 function updateDepartment(event) {
