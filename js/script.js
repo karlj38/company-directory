@@ -311,7 +311,9 @@ function displayDepartments(depts) {
     $card.append($cardHeader);
 
     let $cardBody = $(`<div class="card-body"></div>`);
-    $cardBody.append(`<p class="card-text">${d.location}</p>`);
+    $cardBody.append(
+      `<p class="card-text"><i class="fa fa-map-marker-alt d-inline-flex justify-content-center"></i> ${d.location}</p>`
+    );
     $cardBody.append(`<p class="card-text">Personnel: ${d.personnel}</p>`);
     $card.append($cardBody);
 
@@ -408,20 +410,24 @@ function displayPersonnel(staff) {
     $cardHeader.append(
       `<h2 class="card-title fs-4">${p.firstName} ${p.lastName}</h2>`
     );
+    if (p.jobTitle || null) {
+      $cardHeader.append(`<p class="card-subtitle">${p.jobTitle}</p>`);
+    }
     $card.append($cardHeader);
 
     let $cardBody = $(`<div class="card-body"></div>`);
-    if (p.jobTitle || null) {
-      $cardBody.append(`<p class="card-subtitle">${p.jobTitle}</p>`);
-    }
-    $cardBody.append(`<p class="card-text">${p.department}</p>`);
-    $cardBody.append(`<p class="card-text">${p.location}</p>`);
+    $cardBody.append(
+      `<p class="card-text"><i class="fa fa-users d-inline-flex justify-content-center"></i> ${p.department}</p>`
+    );
+    $cardBody.append(
+      `<p class="card-text"><i class="fa fa-map-marker-alt d-inline-flex justify-content-center"></i> ${p.location}</p>`
+    );
+    $cardBody.append(
+      `<p class="card-text"><i class="fa fa-envelope d-inline-flex justify-content-center"></i> <a href="mailto:${p.email}" target="_blank">${p.email}</a></p>`
+    );
     $card.append($cardBody);
 
     let $cardFooter = $(`<div class="card-footer text-end"></div>`);
-    $cardFooter.append(
-      `<a href="mailto:${p.email}" target="_blank" class="me-2"><button class="btn btn-primary btn-sm"><i class="fas fa-envelope"></i></button></a>`
-    );
     let $dropdown = $(`<div class="dropdown d-inline me-2"></div>`);
     let $dropButton = $(
       `<button id="l${p.id}View" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-eye"></i></button>`

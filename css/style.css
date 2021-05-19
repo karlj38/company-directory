@@ -7,6 +7,10 @@
   box-shadow: none;
 }
 
+.card-body i {
+  width: 20px;
+}
+
 .rotate90 {
   transform: rotate(90deg);
 }
