@@ -430,10 +430,10 @@ function displayPersonnel(staff) {
       `<div class="dropdown-menu p-0" aria-labelled-by="l${p.id}View"></div>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'd.name', '${p.department}')">Department</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${p.department}')">Department</button></li>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${p.location}')">Location</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'l.name', '${p.location}')">Location</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
