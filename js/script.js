@@ -334,7 +334,7 @@ function displayDepartments(depts) {
       `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${d.location}')">${d.location}</button></li>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${d.name}')">Personnel</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${d.location}')">${d.location}</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
