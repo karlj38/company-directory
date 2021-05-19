@@ -78,7 +78,8 @@ function advSearch(event, table = null, col = null, term = null) {
             $("#currentView").text(`Custom ${table} Results`);
           }
         } else {
-          alert("No results found");
+          $("#toastErrorMessage").text("No results found");
+          toastError.show();
         }
       } else {
         $("#toastErrorMessage").text(data.status.description);
