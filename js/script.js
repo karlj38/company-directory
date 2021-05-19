@@ -331,10 +331,10 @@ function displayDepartments(depts) {
       `<div class="dropdown-menu p-0" aria-labelled-by="l${d.id}View"></div>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'location', 'l.name', '${d.location}')">Location</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${d.name}')">Personnel</button></li>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${d.name}')">Personnel</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${d.location}')">${d.location}</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
@@ -443,10 +443,10 @@ function displayPersonnel(staff) {
       `<div class="dropdown-menu p-0" aria-labelled-by="l${p.id}View"></div>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${p.department}')">Department</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'd.name', '${p.department}')">${p.department}</button></li>`
     );
     $dropmenu.append(
-      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'department', 'l.name', '${p.location}')">Location</button></li>`
+      `<li><button type="button" class="dropdown-item list-group-item list-group-item-action" onclick="advSearch(event, 'personnel', 'l.name', '${p.location}')">${p.location}</button></li>`
     );
     $dropdown.append($dropmenu);
     $cardFooter.append($dropdown);
