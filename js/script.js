@@ -192,6 +192,7 @@ function configLocModal(id) {
 
 function configPModal(event, id = null) {
   event.preventDefault();
+  id = id || $("#search").val();
   $("#idSearch, #personnelForm").trigger("reset");
   $.getJSON("php/getDepartments", function (data) {
     if (data.status.code == 200) {
@@ -201,7 +202,7 @@ function configPModal(event, id = null) {
         depts.forEach((d) => {
           $("#pDept").append(`<option value="${d.id}">${d.name}</option>`);
         });
-        getPerson(id || $("#search").val());
+        getPerson(id);
       }
     } else {
       $("#toastErrorMessage").text(data.status.description);
