@@ -302,10 +302,8 @@ function deleteEntry(table, id, name) {
 function displayDepartments(depts) {
   $("#grid").empty();
   depts.forEach(function (d) {
-    let $col = $(
-      `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
-    );
-    let $card = $(`<div id="d${d.id}" class="card mx-auto"></div>`);
+    let $col = $(`<div class="col-md-6 col-xl-4 mb-4"></div>`);
+    let $card = $(`<div id="d${d.id}" class="card mx-auto h-100"></div>`);
 
     let $cardHeader = $(`<div class="card-header"></div>`);
     $cardHeader.append(`<h2 class="card-title fs-4">${d.name}</h2>`);
@@ -353,10 +351,8 @@ function displayDepartments(depts) {
 function displayLocations(locs) {
   $("#grid").empty();
   locs.forEach(function (l) {
-    let $col = $(
-      `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
-    );
-    let $card = $(`<div id="l${l.id}" class="card mx-auto"></div>`);
+    let $col = $(`<div class="col-md-6 col-xl-4 mb-4"></div>`);
+    let $card = $(`<div id="l${l.id}" class="card mx-auto h-100"></div>`);
 
     let $cardHeader = $(`<div class="card-header"></div>`);
     $cardHeader.append(`<h2 class="card-title fs-4">${l.name}</h2>`);
@@ -404,10 +400,8 @@ function displayLocations(locs) {
 function displayPersonnel(staff) {
   $("#grid").empty();
   staff.forEach(function (p) {
-    let $col = $(
-      `<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4"></div>`
-    );
-    let $card = $(`<div id="e${p.id}" class="card mx-auto"></div>`);
+    let $col = $(`<div class="col-md-6 col-xl-4 mb-4"></div>`);
+    let $card = $(`<div id="e${p.id}" class="card mx-auto h-100"></div>`);
 
     let $cardHeader = $(`<div class="card-header"></div>`);
     $cardHeader.append(
