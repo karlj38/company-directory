@@ -652,8 +652,8 @@ function toggleAdvSearch() {
   $("#advSearch").slideToggle("fast");
 }
 
-function toTop(duration = 0) {
-  $("html, body").animate({ scrollTop: 0 }, duration);
+function toTop() {
+  $("html, body").animate({ scrollTop: 0 });
 }
 
 function updateDepartment(event) {
