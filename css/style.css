@@ -11,6 +11,11 @@
   width: 20px;
 }
 
+.noScroll {
+  height: 100%;
+  overflow: hidden;
+}
+
 .rotate90 {
   transform: rotate(90deg);
 }

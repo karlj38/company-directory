@@ -122,6 +122,7 @@ function checkDeletion(table, id, name) {
 
 function closeMenuBar() {
   $("#menuBar, #overlay").removeClass("active");
+  $("body").removeClass("noScroll");
 }
 
 function configAdvSearch() {
@@ -646,6 +647,7 @@ function newPersonnel(event) {
 
 function openMenuBar() {
   $("#menuBar, #overlay").addClass("active");
+  $("body").addClass("noScroll");
 }
 
 function toggleAdvSearch() {
