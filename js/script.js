@@ -284,14 +284,16 @@ function deleteEntry(table, id, name) {
             break;
           case "location":
             getLocations();
+            break;
           case "personnel":
             getPersonnel();
+            break;
           default:
-            $("#confirmDeleteModal").modal("hide");
-            $("#toastSuccessMessage").text(`Deleted ${name}`);
-            toastSuccess.show();
             break;
         }
+        $("#confirmDeleteModal").modal("hide");
+        $("#toastSuccessMessage").text(`Deleted ${name}`);
+        toastSuccess.show();
       } else {
         $("#toastErrorMessage").text(data.status.description);
         toastError.show();
